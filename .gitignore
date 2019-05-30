@@ -102,4 +102,5 @@ ENV/
 
 # tests and dev
 dev/
-tests/
+docs/usage/data/
+docs/usage/output/
