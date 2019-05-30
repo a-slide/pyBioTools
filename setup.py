@@ -11,7 +11,7 @@ setup(
     description = pbt.__description__,
     url = "https://github.com/a-slide/pyBioTools",
     author = 'Adrien Leger',
-    author_email = 'aleg {at} ebi.ac.uk',
+    author_email = 'aleg@ebi.ac.uk',
     license = 'GPLv3',
     python_requires ='>=3.5',
     classifiers = [
