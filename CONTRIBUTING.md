@@ -7,7 +7,6 @@ First of all, thanks for considering contributing to `pyBioTools`! 👍 It's peo
 [repo]: https://github.com/a-slide/pyBioTools
 [issues]: https://github.com/a-slide/pyBioTools/issues
 [new_issue]: https://github.com/a-slide/pyBioTools/issues/new
-[citation]: https://zenodo.org/record/2540931
 [email]: aleg@ebi.ac.uk
 [code_of_conduct]: https://github.com/a-slide/pyBioTools/blob/master/CODE_OF_CONDUCT.md
 
@@ -76,7 +75,6 @@ We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/)
 4. Commit and push your changes.
 
 5. Submit a [pull request](https://guides.github.com/activities/forking/#making-a-pull-request).
-
 
 ---
 
