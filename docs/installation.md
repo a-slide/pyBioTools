@@ -9,12 +9,16 @@ With [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/inst
 
 ```bash
 mkvirtualenv pyBioTools -p python3.6
+
+workon pyBioTools
 ```
 
 With [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html):
 
 ```bash
 conda create -n pyBioTools python=3.6
+
+conda activate pyBioTools
 ```
 
 ## Dependencies
@@ -26,7 +30,7 @@ Nanocompore relies on a the following robustly maintained third party python lib
 * pysam 0.15.2
 * pandas 0.24.2
 
-The correct versions of packages are installed together with the software when using pip.
+The correct versions of packages are installed together with the software when using pip or conda
 
 ## Option 1: Installation with pip from pypi
 
@@ -40,7 +44,19 @@ pip install pyBioTools
 pip install pyBioTools --upgrade
 ```
 
-## Option 2: Installation with pip from Github
+## Option 2: Installation with conda from anaconda
+
+Install or upgrade the package with pip from pypi
+
+```bash
+# First installation
+conda install pybiotools
+
+# Update to last version
+conda update pybiotools
+```
+
+## Option 3: Installation with pip from Github
 
 Or from github to get the last version
 
@@ -55,7 +71,7 @@ pip install git+https://github.com/a-slide/pyBioTools.git@dev
 pip install git+https://github.com/a-slide/pyBioTools.git --upgrade
 ```
 
-## Option 3: Clone the repository and install locally in develop mode
+## Option 4: Clone the repository and install locally in develop mode
 
 With this option, the package will be locally installed in *editable* or *develop mode*. This allows the package to be both installed and editable in project form. This is the recommended option if you wish to modify the code and/or participate to the development of the package (see [contribution guidelines](contributing.md)).
 

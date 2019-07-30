@@ -102,5 +102,7 @@ ENV/
 
 # tests and dev
 dev/
+test/
 docs/usage/data/
 docs/usage/output/
+conda_build/

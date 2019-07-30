@@ -4,6 +4,7 @@
 # * pygments
 # * pymdown-extensions
 # * mknotebooks
+# * mkdocs-exclude
 
 # Project information
 site_name: 'pyBioTools'
@@ -26,6 +27,9 @@ nav:
         - Alignment:
             - CLI : usage/Alignment_CLI.ipynb
             - API : usage/Alignment_API.ipynb
+        - Fastq:
+            - CLI : usage/Fastq_CLI.ipynb
+            - API : usage/Fastq_API.ipynb
     - Citing: citing.md
     - Contributing Guidelines: contributing.md
     - Code of conduct: code_of_conduct.md
@@ -61,3 +65,7 @@ markdown_extensions:
 
 plugins:
   - mknotebooks
+  - exclude:
+      glob:
+        - "usage/output/*"
+        - "usage/data/*"

@@ -1,0 +1,41 @@
+{% set version = "0.1.0.1" %}
+{% set name = "pyBioTools" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: dist/{{ name }}-{{ version }}.tar.gz
+
+build:
+  number: 0
+  script: "pip install {{ name }}-{{ version }}.tar.gz --no-deps --ignore-installed -vv "
+  entry_points:
+    - pyBioTools=pyBioTools.__main__:main
+  noarch: "python"
+
+requirements:
+  build:
+    - python>=3.5
+    - pip>=19.2.1
+    - ripgrep=11.0.1
+  run:
+    - python>=3.5
+    - tqdm>=4.32.1
+    - numpy>=1.16.4
+    - pysam>=0.15.2
+    - pandas>=0.24.2
+
+test:
+  imports:
+    - pyBioTools.Alignment
+    - pyBioTools.Fastq
+  commands:
+    - pyBioTools Alignment -h
+    - pyBioTools Fastq -h
+
+about:
+  home: "https://github.com/a-slide/pyBioTools"
+  license: "GPLv3"
+  summary: "pyBioTools is a collection of tools to manipulate biological sequences"
