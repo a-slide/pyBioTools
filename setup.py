@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-import pyBioTools as pbt
+import pyBioTools as package
 
 # Collect info in a dictionnary for setup.py
 setup(
-    name =  pbt.__name__,
-    version = pbt.__version__,
-    description = pbt.__description__,
+    name =  package.__name__,
+    version = package.__version__,
+    description = package.__description__,
     url = "https://github.com/a-slide/pyBioTools",
     author = 'Adrien Leger',
     author_email = 'aleg@ebi.ac.uk',
@@ -25,5 +25,5 @@ setup(
         'numpy==1.16.4',
         'pysam==0.15.2',
         'pandas==0.24.2'],
-    packages = [pbt.__name__],
+    packages = [package.__name__],
     entry_points = {'console_scripts': ['pyBioTools=pyBioTools.__main__:main']})

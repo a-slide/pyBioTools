@@ -7,7 +7,7 @@ import random
 
 # Third party library imports
 import pysam
-from tqdm import tqdm, trange
+from tqdm import tqdm
 
 ## Local imports
 from pyBioTools.common import *
@@ -89,7 +89,6 @@ def index_reads (
     # Print read count summary
     logger.debug("\nRead counts summary")
     logger.debug(dict_to_str(c, ntab=1))
-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INDEX READS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def sample_reads (

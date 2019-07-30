@@ -7,6 +7,7 @@ import os
 import inspect
 from collections import *
 import logging
+from glob import iglob
 
 #~~~~~~~~~~~~~~FUNCTIONS~~~~~~~~~~~~~~#
 
@@ -19,6 +20,23 @@ def dir_writable (fn, **kwargs):
     if not os.path.isdir(fn):
         fn = os.path.dirname(fn)
     return os.path.dirname(fn) and os.access (fn, os.W_OK)
+
+def is_gziped (fp, **kwargs):
+    """ Return True if the file is Gziped else False """
+    return fp[-2:].lower() == "gz"
+
+def super_iglob(pathname, recursive=False):
+    """ Same as iglob but  pass multiple path regex instead of one. does not store anything in memory"""
+    if type(pathname) == str:
+        for path in iglob(pathname=pathname, recursive=recursive):
+            yield(path)
+
+    elif type(pathname) in [list, tuple, set]:
+        for paths in pathname:
+            for path in iglob(pathname=paths, recursive=recursive):
+                yield(path)
+    else:
+        raise ValueError ("Invalid file type")
 
 def mkdir (fn, exist_ok=False):
     """ Create directory recursivelly. Raise IO error if path exist or if error at creation """
