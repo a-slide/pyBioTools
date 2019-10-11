@@ -25,15 +25,16 @@ nav:
     - Installation instructions: installation.md
     - Usage:
         - Alignment:
-            - CLI : usage/Alignment_CLI.ipynb
-            - API : usage/Alignment_API.ipynb
+            - CLI : usage/Alignment/CLI.ipynb
+            - API : usage/Alignment/API.ipynb
         - Fastq:
-            - CLI : usage/Fastq_CLI.ipynb
-            - API : usage/Fastq_API.ipynb
+            - CLI : usage/Fastq/CLI.ipynb
+            - API : usage/Fastq/API.ipynb
     - Citing: citing.md
     - Contributing Guidelines: contributing.md
     - Code of conduct: code_of_conduct.md
     - Licence: licence.md
+    - Changelog: changelog.md
 
 # Theme customization
 theme:
