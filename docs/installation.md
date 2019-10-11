@@ -50,7 +50,7 @@ Install or upgrade the package with pip from pypi
 
 ```bash
 # First installation
-conda install pybiotools
+conda install -c aleg -c anaconda -c conda-forge -c bioconda pybiotools
 
 # Update to last version
 conda update pybiotools

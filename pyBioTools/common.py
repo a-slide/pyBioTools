@@ -8,6 +8,10 @@ import inspect
 from collections import *
 import logging
 from glob import iglob
+import gzip
+
+# Third party library imports
+import pysam
 
 #~~~~~~~~~~~~~~FUNCTIONS~~~~~~~~~~~~~~#
 
@@ -65,6 +69,9 @@ def dict_to_str (d, tab="\t", ntab=0):
 def doc_func (func):
     """Parse the function description string"""
 
+    if inspect.isclass(func):
+        func = func.__init__
+
     docstr_list = []
     for l in inspect.getdoc(func).split("\n"):
         l = l.strip()
@@ -118,15 +125,26 @@ def make_arg_dict (func):
         return d
 
 
-def arg_opt (func, arg, **kwargs):
+def arg_from_docstr (parser, func, arg_name, short_name=None):
     """Get options corresponding to argumant name and deal with special cases"""
-    arg_dict = make_arg_dict(func)[arg]
 
-    if "default" in arg_dict and "help" in arg_dict:
-        arg_dict["help"] += " (default: %(default)s)"
+    if short_name:
+        arg_names = ["-{}".format(short_name), "--{}".format(arg_name)]
+    else:
+        arg_names = ["--{}".format(arg_name)]
 
-    if "type" in arg_dict and "help" in arg_dict:
-        arg_dict["help"] += " [%(type)s]"
+    arg_dict = make_arg_dict(func)[arg_name]
+    if "help" in arg_dict:
+        if "default" in arg_dict:
+            if arg_dict["default"] == "" or arg_dict["default"] == [] :
+                arg_dict["help"] += " (default: None)"
+            else:
+                arg_dict["help"] += " (default: %(default)s)"
+        else:
+            arg_dict["help"] += " (required)"
+
+        if "type" in arg_dict:
+            arg_dict["help"] += " [%(type)s]"
 
     # Special case for boolean args
     if arg_dict["type"] == bool:
@@ -141,7 +159,7 @@ def arg_opt (func, arg, **kwargs):
     elif arg_dict["type"] == list:
         arg_dict["nargs"]='*'
 
-    return arg_dict
+    parser.add_argument(*arg_names, **arg_dict)
 
 def jhelp (f:"python function or method"):
     """
@@ -165,7 +183,10 @@ def jhelp (f:"python function or method"):
         # Arg signature section
         s+= "* **{}**".format(arg_name)
         if "default" in arg_val:
-            s+= " (default: {})".format(arg_val["default"])
+            if arg_val["default"] == "":
+                s+=" (default: \"\")".format(arg_val["default"])
+            else:
+                s+=" (default: {})".format(arg_val["default"])
         if "required" in arg_val:
             s+= " (required)"
         if "type" in arg_val:
@@ -197,6 +218,97 @@ def set_logger (verbose=False, quiet=False):
         logger.setLevel(logging.INFO)
 
     return logger
+
+def head (fp, n=10, ignore_comment_line=False, comment_char="#", max_char_line=300, sep="\t", max_char_col=30, **kwargs):
+    """
+    Emulate linux head cmd. Handle gziped files and bam files
+    * fp
+        Path to the file to be parsed. Works with text, gunziped and binary bam/sam files
+    * n
+        Number of lines to print starting from the begining of the file (Default 10)
+    * ignore_comment_line
+        Skip initial lines starting with a specific character. Pointless for bam files(Default False)
+    * comment_char
+        Character or string for ignore_comment_line argument (Default "#")
+    * max_char_line
+        Maximal number of character to print per line (Default 150)
+    """
+    line_list = []
+    ext = fp.rpartition(".")[2].lower()
+
+    # For bam files
+    if ext in ["bam", "sam"]:
+        with pysam.AlignmentFile(fp) as f:
+
+            for line_num, read in enumerate(f):
+                if line_num >= n:
+                    break
+                l = read.to_string()
+                if sep:
+                    line_list.append (l.split(sep))
+                else:
+                    line_list.append (l)
+                line_num+=1
+
+    # Not bam file
+    else:
+        # For text files
+        if ext=="gz":
+            open_fun = gzip.open
+            open_mode =  "rt"
+        else:
+            open_fun = open
+            open_mode =  "r"
+
+        try:
+            with open_fun(fp, open_mode) as fh:
+                line_num = 0
+                while (line_num < n):
+                    l= next(fh).strip()
+                    if ignore_comment_line and l.startswith(comment_char):
+                        continue
+                    if sep:
+                        line_list.append (l.split(sep))
+                    else:
+                        line_list.append (l)
+                    line_num+=1
+
+        except StopIteration:
+            print ("Only {} lines in the file".format(line_num))
+
+    # Print lines
+    if sep:
+        try:
+            # Find longest elem per col
+            col_len_list = [0 for _ in range (len(line_list[0]))]
+            for ls in line_list:
+                for i in range (len(ls)):
+                    len_col = len(ls[i])
+                    if len_col > max_char_col:
+                        col_len_list[i] = max_char_col
+                    elif len_col > col_len_list[i]:
+                        col_len_list[i] = len_col
+
+            line_list_tab = []
+            for ls in line_list:
+                s = ""
+                for i in range (len(ls)):
+                    len_col = col_len_list[i]
+                    len_cur_col = len(ls[i])
+                    s += ls[i][0:len_col] + " "*(len_col-len_cur_col)+" "
+                line_list_tab.append(s)
+            line_list = line_list_tab
+
+        # Fall back to none tabulated display
+        except IndexError:
+            return head (fp=fp, n=n, ignore_comment_line=ignore_comment_line, comment_char=comment_char, max_char_line=max_char_line, sep=None)
+
+    for l in line_list:
+        if max_char_line and len(l) > max_char_line:
+            print (l[0:max_char_line]+"...")
+        else:
+            print (l)
+    print()
 
 #~~~~~~~~~~~~~~CUSTOM EXCEPTION AND WARN CLASSES~~~~~~~~~~~~~~#
 class pyBioToolsError (Exception):
