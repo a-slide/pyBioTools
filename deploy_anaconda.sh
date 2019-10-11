@@ -12,7 +12,7 @@ conda config --set always_yes yes --set changeps1 no --set anaconda_upload no
 conda update -q conda
 
 echo "Install packages needed for package build and upload"
-conda install -q python=3.6 conda-build anaconda-client conda-verify
+conda install -q python=3.6 conda-build anaconda-client ripgrep conda-verify
 
 echo "compile package from setup.py"
 python setup.py sdist
