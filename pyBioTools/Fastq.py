@@ -36,11 +36,12 @@ def Filter (
     * qual_offset
         Quality scoring system off set. Nowadays pretty much everyone uses +33
     * kwargs
-        Allow to pass extra options such as verbose and quiet
+        Allow to pass extra options such as verbose, quiet and progress
     """
 
     # Define logger
     logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
+    progress = kwargs.get("progress", False)
 
     # Define source if directory given
     if os.path.isdir(input_fn):
@@ -58,7 +59,7 @@ def Filter (
     read_ids = set()
 
     try:
-        with tqdm (desc="Reads processed ", unit=" reads") as p:
+        with tqdm (desc="Reads processed ", unit=" reads", disable=not progress) as p:
             with open_fun(output_fn, open_mode) as fp_out:
                 for fn in super_iglob (input_fn):
                     c["source files"]+=1

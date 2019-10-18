@@ -31,10 +31,11 @@ def Reads_index (
     * skip_supplementary
         Filter out supplementary alignment
     * kwargs
-        Allow to pass extra options such as verbose and quiet
+        Allow to pass extra options such as verbose, quiet and progress
     """
     # Define logger
     logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
+    progress = kwargs.get("progress", False)
 
     # Check bam
     logger.info("Checking Bam file")
@@ -44,7 +45,7 @@ def Reads_index (
     logger.info("Parsing reads")
     c = defaultdict (Counter)
     idx_fn = input_fn+".idx.gz"
-    with pysam.AlignmentFile(input_fn) as bam, gzip.open(idx_fn, "wt") as idx, tqdm(unit=" Reads", disable=logger.level>=30) as pbar:
+    with pysam.AlignmentFile(input_fn) as bam, gzip.open(idx_fn, "wt") as idx, tqdm(unit=" Reads", disable=not progress) as pbar:
         try:
             while True:
                 # Save pointer and read_id
@@ -98,11 +99,12 @@ def Reads_sample (
     * rand_seed
         Seed to use for the pseudo randon generator. For non deterministic behaviour set to 0
     * kwargs
-        Allow to pass extra options such as verbose and quiet
+        Allow to pass extra options such as verbose, quiet and progress
     """
 
     # Define logger
     logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
+    progress = kwargs.get("progress", False)
 
     # Checking bam and index reads if needed
     logger.info("Checking Bam and index file")
@@ -120,7 +122,7 @@ def Reads_sample (
     l = []
 
     with gzip.open(idx_fn, "rt") as idx:
-        for line in tqdm (idx, desc="\tIndex", disable=logger.level>=30):
+        for line in tqdm (idx, desc="\tIndex", disable=not progress):
             l.append (int(line.rstrip().split("\t")[1]))
 
     # Get random reads
@@ -140,7 +142,7 @@ def Reads_sample (
                     random.seed(rand_seed+sample_num)
                 p_list = sorted(random.sample(l, n_reads))
 
-                for p in tqdm(p_list, desc="\tSample {}".format(sample_id), unit=" Reads", disable=logger.level>=30):
+                for p in tqdm(p_list, desc="\tSample {}".format(sample_id), unit=" Reads", disable=not progress):
                     bam_in.seek(p)
                     read = next(bam_in)
                     bam_out.write(read)
@@ -162,7 +164,6 @@ def Filter (
     min_freq_identity:float=0,
     select_ref:list=[],
     exclude_ref:list=[],
-    clear_tags:bool=False,
     **kwargs):
     """
     * input_fn
@@ -190,10 +191,11 @@ def Filter (
     * exclude_ref
         List of references on which the reads should not be mapped.
     * kwargs
-        Allow to pass extra options such as verbose and quiet
+        Allow to pass extra options such as verbose, quiet and progress
     """
     # Define logger
     logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
+    progress = kwargs.get("progress", False)
 
     # Check bam
     logger.info("Checking input bam file")
@@ -204,7 +206,7 @@ def Filter (
     c = defaultdict (Counter)
     with pysam.AlignmentFile(input_fn) as bam_in:
         with pysam.AlignmentFile(output_fn, "wb", header=bam_in.header) as bam_out:
-            for read in tqdm(bam_in, desc="\t", unit=" Reads", disable=logger.level>=30):
+            for read in tqdm(bam_in, desc="\t", unit=" Reads", disable=not progress):
                 valid_read, read_status = _eval_read(
                     read = read,
                     skip_unmapped = skip_unmapped,

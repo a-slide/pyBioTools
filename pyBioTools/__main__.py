@@ -92,9 +92,10 @@ def main ():
 
     # Add common group parsers
     for sp in [sp_a_ir, sp_a_sr, sp_a_fr, sp_fq_fr]:
-        sp_verbosity = sp.add_mutually_exclusive_group()
-        sp_verbosity.add_argument("-v", "--verbose", action="store_true", default=False, help="Increase verbosity (default: %(default)s)")
-        sp_verbosity.add_argument("-q", "--quiet", action="store_true", default=False, help="Reduce verbosity (default: %(default)s)")
+        sp_vb = sp.add_mutually_exclusive_group()
+        sp_vb.add_argument("-v", "--verbose", action="store_true", default=False, help="Increase verbosity (default: %(default)s)")
+        sp_vb.add_argument("-q", "--quiet", action="store_true", default=False, help="Reduce verbosity (default: %(default)s)")
+        sp_vb.add_argument("--progress", action="store_true", default=False, help="Display a progress bar")
 
     # Parse args and call subfunction
     args = parser.parse_args()
