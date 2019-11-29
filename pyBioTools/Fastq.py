@@ -20,6 +20,9 @@ def Filter (
     min_qual:float=None,
     remove_duplicates:bool=False,
     qual_offset:int=33,
+    verbose=False,
+    quiet=False,
+    progress=False,
     **kwargs):
     """
     Filter fastq reads based on their length, mean quality and the presence of duplicates. Can also be used to concatenate reads from multiple files in a single one.
@@ -35,23 +38,17 @@ def Filter (
         If true duplicated reads with the same read id are discarded
     * qual_offset
         Quality scoring system off set. Nowadays pretty much everyone uses +33
-    * kwargs
-        Allow to pass extra options such as verbose, quiet and progress
     """
 
     # Define logger
-    logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
-    progress = kwargs.get("progress", False)
+    logger = set_logger (verbose=verbose, quiet=quiet)
 
     # Define source if directory given
     if os.path.isdir(input_fn):
         input_fn = [os.path.join(input_fn, "*.fastq"), os.path.join(input_fn, "*.fq")]
 
     # Define output mode
-    if is_gziped(output_fn):
-        open_fun, open_mode = gzip.open, "wt"
-    else:
-        open_fun, open_mode = open, "w"
+    open_fun, open_mode = (gzip.open, "wt") if is_gziped(output_fn) else (open, "w")
 
     # Parse reads
     logger.info("Parsing reads")
@@ -62,6 +59,7 @@ def Filter (
         with tqdm (desc="Reads processed ", unit=" reads", disable=not progress) as p:
             with open_fun(output_fn, open_mode) as fp_out:
                 for fn in super_iglob (input_fn):
+                    logger.debug("\tReading file {}".format(fn))
                     c["source files"]+=1
                     with pysam.FastxFile(fn) as fp_in:
                         for read in fp_in:
@@ -91,3 +89,52 @@ def Filter (
     # Print read count summary
     logger.debug("\nRead counts summary")
     logger.debug(dict_to_str(c, ntab=1))
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Helper fastq_writer class~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+class Writer ():
+    def __init__(self, fn, verbose=False):
+        """
+        Very basic fastq writting class
+        * fn
+            Output fastq path. Automatically gzipped if.gz
+        """
+        # Init logger and counter
+        self.log = set_logger(verbose=verbose)
+        self.n_seq = 0
+
+        # Define output mode
+        open_fun, open_mode = (gzip.open, "wt") if is_gziped(fn) else (open, "w")
+
+        # Open input file in writing mode
+        self.fn = fn
+        self.log.debug("Opening file {} in writing mode".format(self.fn))
+        self.fp = open_fun(fn, open_mode)
+
+#~~~~~~~~~~~~~~MAGIC METHODS~~~~~~~~~~~~~~#
+    def __repr__ (self):
+        return "Output target: {}\n\tSequences writen: {}".format(self.fn, self.n_seq)
+
+    def __enter__ (self):
+        return self
+
+    def __exit__(self, exception_type, exception_val, trace):
+        self.close()
+
+#~~~~~~~~~~~~~~PUBLIC METHODS~~~~~~~~~~~~~~#
+    def close (self):
+        try:
+            self.log.debug ("Closing file:{}".format(self.fn))
+            self.fp.close()
+        except Exception as E:
+            print (E)
+        finally:
+            self.log.debug("\tSequences writen: {}".format(self.n_seq))
+
+    def write (self, read_id, seq, qual):
+        """Add new sequence to fastq record"""
+        if not read_id.startswith("@"):
+            read_id = "@"+read_id
+        # Write sequence
+        self.fp.write("{}\n{}\n+\n{}\n".format(read_id, seq, qual))
+        self.n_seq+=1
