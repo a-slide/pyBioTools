@@ -126,7 +126,7 @@ def make_arg_dict (func):
 
 
 def arg_from_docstr (parser, func, arg_name, short_name=None):
-    """Get options corresponding to argumant name and deal with special cases"""
+    """Get options corresponding to argument name from docstring and deal with special cases"""
 
     if short_name:
         arg_names = ["-{}".format(short_name), "--{}".format(arg_name)]
@@ -156,8 +156,9 @@ def arg_from_docstr (parser, func, arg_name, short_name=None):
             del arg_dict["type"]
 
     # Special case for lists args
-    elif arg_dict["type"] == list:
+    elif isinstance(arg_dict["type"], list):
         arg_dict["nargs"]='*'
+        arg_dict["type"]=arg_dict["type"][0]
 
     parser.add_argument(*arg_names, **arg_dict)
 
@@ -190,8 +191,10 @@ def jhelp (f:"python function or method"):
         if "required" in arg_val:
             s+= " (required)"
         if "type" in arg_val:
-            if type(list) == type:
+            if isinstance(arg_val["type"], type):
                 s+= " [{}]".format(arg_val["type"].__name__)
+            elif isinstance(arg_val["type"], list):
+                s+= " [list({})]".format(arg_val["type"][0].__name__)
             else:
                 s+= " [{}]".format(arg_val["type"])
         s+="\n\n"
