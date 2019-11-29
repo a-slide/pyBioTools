@@ -11,13 +11,17 @@ from tqdm import tqdm
 
 ## Local imports
 from pyBioTools.common import *
+from pyBioTools import Fastq
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INDEX READS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Reads_index~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Reads_index (
     input_fn:str,
     skip_unmapped:bool=False,
     skip_secondary:bool=False,
     skip_supplementary:bool=False,
+    verbose=False,
+    quiet=False,
+    progress=False,
     **kwargs):
     """
     Index reads found in a coordinated sorted bam file by read_id.
@@ -30,12 +34,9 @@ def Reads_index (
         Filter out secondary alignment
     * skip_supplementary
         Filter out supplementary alignment
-    * kwargs
-        Allow to pass extra options such as verbose, quiet and progress
     """
     # Define logger
-    logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
-    progress = kwargs.get("progress", False)
+    logger = set_logger (verbose=verbose, quiet=quiet)
 
     # Check bam
     logger.info("Checking Bam file")
@@ -74,7 +75,7 @@ def Reads_index (
     logger.debug("\nRead counts summary")
     logger.debug(dict_to_str(c, ntab=1))
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INDEX READS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Reads_sample~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Reads_sample (
     input_fn:str,
     output_folder:str="./",
@@ -82,6 +83,9 @@ def Reads_sample (
     n_reads:int=1000,
     n_samples:int=1,
     rand_seed:int=42,
+    verbose=False,
+    quiet=False,
+    progress=False,
     **kwargs):
     """
     Randomly sample `n_reads` reads from a bam file and write downsampled files in `n_samples` bam files.
@@ -98,13 +102,10 @@ def Reads_sample (
         Number of samples to generate files for
     * rand_seed
         Seed to use for the pseudo randon generator. For non deterministic behaviour set to 0
-    * kwargs
-        Allow to pass extra options such as verbose, quiet and progress
     """
 
     # Define logger
-    logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
-    progress = kwargs.get("progress", False)
+    logger = set_logger (verbose=verbose, quiet=quiet)
 
     # Checking bam and index reads if needed
     logger.info("Checking Bam and index file")
@@ -150,7 +151,7 @@ def Reads_sample (
             logger.info("\tIndexing output bam file")
             pysam.index(output_fn)
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INDEX READS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Filter~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Filter (
     input_fn:str,
     output_fn:str,
@@ -162,8 +163,11 @@ def Filter (
     min_align_len:int=0,
     min_mapq:int=0,
     min_freq_identity:float=0,
-    select_ref:list=[],
-    exclude_ref:list=[],
+    select_ref:[str]=[],
+    exclude_ref:[str]=[],
+    verbose=False,
+    quiet=False,
+    progress=False,
     **kwargs):
     """
     * input_fn
@@ -190,12 +194,9 @@ def Filter (
         List of references on which the reads have to be mapped.
     * exclude_ref
         List of references on which the reads should not be mapped.
-    * kwargs
-        Allow to pass extra options such as verbose, quiet and progress
     """
     # Define logger
-    logger = set_logger (verbose=kwargs.get("verbose", False), quiet=kwargs.get("quiet", False))
-    progress = kwargs.get("progress", False)
+    logger = set_logger (verbose=verbose, quiet=quiet)
 
     # Check bam
     logger.info("Checking input bam file")
@@ -236,7 +237,89 @@ def Filter (
     logger.debug("\nRead counts summary")
     logger.debug(dict_to_str(c, ntab=1))
 
+from pyBioTools import Fastq
+from tqdm import tqdm
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To_fastq~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+def To_fastq (
+    input_fn:[str],
+    output_r1_fn:str,
+    output_r2_fn:str=None,
+    ignore_paired_end:bool=False,
+    verbose=False,
+    quiet=False,
+    progress=False,
+    **kwargs):
+    """
+    Dump reads from an alignment file or set of alignment file(s) to a fastq or pair of fastq file(s).
+    Only the primary alignment are kept and paired_end reads are assumed to be interleaved.
+    Compatible with unmapped or unaligned alignment files as well as files without header.
+    * input_fn
+        Path (or list of paths) to input BAM/CRAM/SAM file(s)
+    * output_r1_fn
+        Path to an output fastq file (for Read1 in paired_end mode of output_r2_fn is provided). Automatically gzipped if the .gz extension is found
+    * output_r2_fn
+        Optional Path to an output fastq file. Automatically gzipped if the .gz extension is found
+    * ignore_paired_end
+        Ignore paired_end information and output everything in a single file.
+    """
+    # Define logger
+    logger = set_logger (verbose=verbose, quiet=quiet)
+    counter = Counter()
+
+    try:
+        # Open output fastq file writers
+        fastq_r1_fp = Fastq.Writer(output_r1_fn, verbose=verbose)
+        fastq_r2_fp = Fastq.Writer(output_r2_fn, verbose=verbose) if output_r2_fn else None
+
+        logger.info("Parsing reads")
+        input_fn_list = input_fn if isinstance(input_fn, (list, tuple)) else [input_fn]
+        for input_fn in input_fn_list:
+            logger.info("Reading input file {}".format(input_fn))
+            try:
+                with pysam.AlignmentFile(input_fn, check_sq=False) as al_fp, tqdm(desc="\tReading", unit=" Reads", disable=not progress) as pbar:
+                    # Can not use a for loop in no header mode
+                    while True:
+                        r1 = _next_valid(al_fp)
+                        # Paired-end mode
+                        if ignore_paired_end or r1.is_paired:
+                            r2 = _next_valid(al_fp)
+                            if r1.query_name != r2.query_name or not r1.is_read1 or not r2.is_read2:
+                                raise pyBioToolsError ("Reads are paired in dataset but reads do not seem to be interleaved")
+                            # If r2 file provided
+                            if output_r2_fn:
+                                fastq_r1_fp.write(r1.query_name, r1.query_sequence, r1.qual)
+                                fastq_r2_fp.write(r2.query_name, r2.query_sequence, r2.qual)
+                                if progress: pbar.update()
+                            # else write interleaved fastq file
+                            else:
+                                fastq_r1_fp.write(r1.query_name+"_1", r1.query_sequence, r1.qual)
+                                fastq_r1_fp.write(r2.query_name+"_2", r2.query_sequence, r2.qual)
+                                if progress: pbar.update()
+
+                        # Single-end mode
+                        else:
+                            fastq_r1_fp.write(r1.query_name, r1.query_sequence, r1.qual)
+                            if progress: pbar.update()
+
+            except StopIteration:
+                logger.debug("\tReached end of input file {}".format(input_fn))
+
+    # Close all output files
+    finally:
+        for fp in (fastq_r1_fp, fastq_r2_fp):
+            try:
+                fp.close()
+            except:
+                pass
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PRIVATE FUNCTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+def _next_valid (fp):
+    """Auto skip secondary and supplementary alignments"""
+    while True:
+        r = next(fp)
+        if not r.is_secondary and not r.is_supplementary:
+            return r
 
 def _check_bam (fn):
     """Check bam file readability, index and sorting"""
@@ -266,7 +349,7 @@ def _eval_read (
     min_freq_identity = 0,
     select_ref = [],
     exclude_ref = []):
-
+    """"""
     # Get unmapped out of the way first
     if read.is_unmapped:
         if skip_unmapped:
