@@ -91,7 +91,7 @@ def Filter (
     logger.debug(dict_to_str(c, ntab=1))
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Helper fastq_writer class~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Helper writer class~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Writer ():
     def __init__(self, fn, verbose=False):
         """

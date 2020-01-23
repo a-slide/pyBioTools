@@ -30,7 +30,7 @@ def is_gziped (fp, **kwargs):
     return fp[-2:].lower() == "gz"
 
 def super_iglob(pathname, recursive=False):
-    """ Same as iglob but  pass multiple path regex instead of one. does not store anything in memory"""
+    """ Same as iglob but pass multiple path regex instead of one. does not store anything in memory"""
     if type(pathname) == str:
         for path in iglob(pathname=pathname, recursive=recursive):
             yield(path)

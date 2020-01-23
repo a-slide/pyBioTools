@@ -1,4 +1,4 @@
-{% set version = "0.2.0.3" %}
+{% set version = "0.2.0.4" %}
 {% set name = "pyBioTools" %}
 
 package:
@@ -31,6 +31,7 @@ test:
   imports:
     - pyBioTools.Alignment
     - pyBioTools.Fastq
+    - pyBioTools.Fasta
   commands:
     - pyBioTools Alignment -h
     - pyBioTools Fastq -h

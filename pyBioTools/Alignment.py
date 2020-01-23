@@ -237,9 +237,6 @@ def Filter (
     logger.debug("\nRead counts summary")
     logger.debug(dict_to_str(c, ntab=1))
 
-from pyBioTools import Fastq
-from tqdm import tqdm
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To_fastq~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def To_fastq (
     input_fn:[str],
