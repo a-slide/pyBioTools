@@ -3,6 +3,9 @@
 # Standard library imports
 import gzip
 
+## Local imports
+from pyBioTools.common import *
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~API~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 def Reader (fn):
