@@ -83,6 +83,14 @@ def main ():
     arg_from_docstr(sp_a_tf, f, "output_r2_fn" , "2")
     arg_from_docstr(sp_a_tf, f, "ignore_paired_end" , "s")
 
+    # Alignment Reads_sample
+    f = Alignment.Split
+    sp_a_st = sp_a_subparsers.add_parser("Split", description=doc_func(f))
+    sp_a_st.set_defaults(func=f)
+    arg_from_docstr(sp_a_st, f, "input_fn", "i")
+    arg_from_docstr(sp_a_st, f, "output_dir" , "o")
+    arg_from_docstr(sp_a_st, f, "n_files" , "n")
+
     #~~~~~Fastq suparser~~~~~#
     sp_fq = subparsers.add_parser("Fastq", description="Fastq format related functions")
     sp_fq_subparsers = sp_fq.add_subparsers (description="Fastq implements the following subcommands", dest="fastq_subcommands")
@@ -100,7 +108,7 @@ def main ():
     arg_from_docstr(sp_fq_fr, f, "qual_offset" , "f")
 
     # Add common group parsers
-    for sp in [sp_a_ir, sp_a_sr, sp_a_fr, sp_a_tf, sp_fq_fr]:
+    for sp in [sp_a_ir, sp_a_sr, sp_a_fr, sp_a_tf, sp_fq_fr, sp_a_st]:
         sp.add_argument("-v", "--verbose", action="store_true", default=False, help="Increase verbosity (default: %(default)s)")
         sp.add_argument("-q", "--quiet", action="store_true", default=False, help="Reduce verbosity (default: %(default)s)")
         sp.add_argument("--progress", action="store_true", default=False, help="Display a progress bar")
