@@ -322,32 +322,43 @@ def Split (
     input_fn:str,
     output_dir:str="",
     n_files:int=10,
+    output_fn_list:[str]=[],
     verbose=False,
     quiet=False,
     progress=False,
     **kwargs):
     """
-    Split reads in a bam file in N files. The input bam file has to be sorted by coordinates and indexed
+    Split reads in a bam file in N files. The input bam file has to be sorted by coordinates and indexed.
+    The last file can contain a few extra reads.
     * input_fn
         Path to the bam file to filter
     * output_dir
         Path to the directory where to write split bam files.
-        Files generated have the same basename as the source file and are suffixed with numbers starting from 1
+        Files generated have the same basename as the source file and are suffixed with numbers starting from 0
     * n_files
         Number of file to split the original file into
+    * output_fn_list
+        As an alternative to output_dir and n_files one can instead give a list of output files.
+        Reads will be automatically split between the files in the same order as given
     """
     # Define logger
     logger = get_logger (name="Alignment_Split", verbose=verbose, quiet=quiet)
     logger.warning("Running Alignment Split")
 
-    # Define output dir
-    output_dir = os.path.abspath(output_dir)
-    mkdir (output_dir, exist_ok=True)
-
     # Check bam
     logger.info("Checking input bam file")
     _check_bam (input_fn)
-    fn_basename = os.path.basename(input_fn).rpartition(".")[0]
+
+    # Generate list of output files if not given
+    if not output_fn_list:
+        fn_basename = os.path.basename(input_fn).rpartition(".")[0]
+        for chunk in range(n_files):
+            output_fn_list.append(os.path.join(output_dir, "{}_{}.bam".format(fn_basename, chunk)))
+    else:
+        n_files= len(output_fn_list)
+
+    logger.debug("List of output files to generate:")
+    log_list(output_fn_list, logger.debug)
 
     logger.info("Parsing reads")
     c = Counter()
@@ -360,11 +371,12 @@ def Split (
             c["Reads per file"] = n_reads_per_chunk
 
             with tqdm(total=total, desc="\tReading", unit=" Reads", disable=not progress) as pbar:
-                for chunk in range(n_files):
-                    output_fn = os.path.join(output_dir, "{}_{}.bam".format(fn_basename, chunk))
+                for chunk, output_fn in enumerate(output_fn_list):
                     logger.debug("Open ouput file '{}'".format(output_fn))
+                    mkbasedir (output_fn, exist_ok=True)
                     with pysam.AlignmentFile(output_fn, "wb", template=bam_in) as bam_out:
 
+                        n_reads = 0
                         while True:
                             try:
                                 read = next(bam_in)
@@ -375,12 +387,14 @@ def Split (
                             bam_out.write(read)
                             pbar.update()
                             c["Reads writen"]+=1
+                            n_reads+=1
 
-                            if c["Reads writen"]%n_reads_per_chunk == 0 and chunk < n_files-1:
+                            if n_reads == n_reads_per_chunk and chunk < n_files-1:
                                 break
 
                     # Close file and index
                     logger.debug("Close and index output file '{}'".format(output_fn))
+                    logger.debug("Reads written: {:,}".format(n_reads))
                     pysam.index (output_fn)
 
     # Print read count summary
