@@ -43,28 +43,11 @@ def super_iglob(pathname, recursive=False):
         raise ValueError ("Invalid file type")
 
 def mkdir (fn, exist_ok=False):
-    """ Create directory recursivelly. Raise IO error if path exist or if error at creation """
+    """ Create directory recursively. Raise IO error if path exist or if error at creation """
     try:
         os.makedirs (fn, exist_ok=exist_ok)
     except:
-        raise NanopolishCompError ("Error creating output folder `{}`".format(fn))
-
-def dict_to_str (d, tab="\t", ntab=0):
-    """ Transform a multilevel dict to a tabulated str """
-    m = ""
-
-    if isinstance(d, Counter):
-        for i, j in d.most_common():
-            m += "{}{}: {:,}\n".format(tab*ntab, i, j)
-
-    else:
-        for i, j in d.items():
-            if isinstance(j, dict):
-                j = dict_to_str(j, tab=tab, ntab=ntab+1)
-                m += "{}{}\n{}".format(tab*ntab, i, j)
-            else:
-                m += "{}{}: {}\n".format(tab*ntab, i, j)
-    return m
+        raise pyBioToolsError ("Error creating output folder `{}`".format(fn))
 
 def doc_func (func):
     """Parse the function description string"""
@@ -123,7 +106,6 @@ def make_arg_dict (func):
             if name in docstr_dict:
                 d[name]["help"] = " ".join(docstr_dict[name])
         return d
-
 
 def arg_from_docstr (parser, func, arg_name, short_name=None):
     """Get options corresponding to argument name from docstring and deal with special cases"""
@@ -205,12 +187,11 @@ def jhelp (f:"python function or method"):
     # Display in Jupyter
     display (Markdown(s))
 
-def set_logger (verbose=False, quiet=False):
+def get_logger (name=None, verbose=False, quiet=False):
     """Set logger to appropriate log level"""
-
-    # Config logger
     logging.basicConfig(format='%(message)s')
-    logger = logging.getLogger()
+    logging.getLogger().handlers[0].setFormatter(CustomFormatter())
+    logger = logging.getLogger(name)
 
     # Define overall verbose level
     if verbose:
@@ -221,6 +202,32 @@ def set_logger (verbose=False, quiet=False):
         logger.setLevel(logging.INFO)
 
     return logger
+
+class CustomFormatter(logging.Formatter):
+    """"""
+    FORMATS = {
+        logging.WARNING: "## %(msg)s ##",
+        logging.INFO: "\t%(msg)s",
+        logging.DEBUG: "\t[DEBUG] [%(name)s] %(msg)s"}
+
+    def format(self, record):
+        log_fmt = self.FORMATS[record.levelno]
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+
+def log_dict (d, logger, level=1):
+    """ Transform a multilevel dict to a tabulated str """
+
+    if isinstance(d, Counter):
+        for i, j in d.most_common():
+            logger("{}{}: {:,}".format(" "*level, i, j))
+    else:
+        for i, j in d.items():
+            if isinstance(j, dict):
+                logger("{}{}".format(" "*level, i, j))
+                log_dict(j, logger, level=level+1)
+            else:
+                logger("{}{}: {}".format(" "*level, i, j))
 
 def head (fp, n=10, ignore_comment_line=False, comment_char="#", max_char_line=300, sep="\t", max_char_col=30, **kwargs):
     """
