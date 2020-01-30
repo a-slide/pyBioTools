@@ -41,7 +41,8 @@ def Filter (
     """
 
     # Define logger
-    logger = set_logger (verbose=verbose, quiet=quiet)
+    logger = get_logger (name="Fastq_Filter", verbose=verbose, quiet=quiet)
+    logger.warning("Running Fastq Filter")
 
     # Define source if directory given
     if os.path.isdir(input_fn):
@@ -59,9 +60,9 @@ def Filter (
         with tqdm (desc="Reads processed ", unit=" reads", disable=not progress) as p:
             with open_fun(output_fn, open_mode) as fp_out:
                 for fn in super_iglob (input_fn):
-                    logger.debug("\tReading file {}".format(fn))
                     c["source files"]+=1
                     with pysam.FastxFile(fn) as fp_in:
+                        logger.debug("Reading file {}".format(fn))
                         for read in fp_in:
 
                             if min_len and len(read.sequence) < min_len:
@@ -83,24 +84,25 @@ def Filter (
                             c["total_reads"]+=1
                             p.update()
 
+                        logger.debug("End of file {}".format(fn))
+
     except (StopIteration, KeyboardInterrupt):
         pass
 
     # Print read count summary
-    logger.debug("\nRead counts summary")
-    logger.debug(dict_to_str(c, ntab=1))
-
+    logger.info("Read counts summary")
+    log_dict(c, logger.info)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Helper writer class~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 class Writer ():
-    def __init__(self, fn, verbose=False):
+    def __init__(self, fn, verbose=False, quiet=False):
         """
         Very basic fastq writting class
         * fn
             Output fastq path. Automatically gzipped if.gz
         """
         # Init logger and counter
-        self.log = set_logger(verbose=verbose)
+        self.log = get_logger (name="Fastq_Writer", verbose=verbose, quiet=quiet)
         self.n_seq = 0
 
         # Define output mode
@@ -111,7 +113,7 @@ class Writer ():
         self.log.debug("Opening file {} in writing mode".format(self.fn))
         self.fp = open_fun(fn, open_mode)
 
-#~~~~~~~~~~~~~~MAGIC METHODS~~~~~~~~~~~~~~#
+    #~~~~~~~~~~~~~~MAGIC METHODS~~~~~~~~~~~~~~#
     def __repr__ (self):
         return "Output target: {}\n\tSequences writen: {}".format(self.fn, self.n_seq)
 
@@ -121,7 +123,7 @@ class Writer ():
     def __exit__(self, exception_type, exception_val, trace):
         self.close()
 
-#~~~~~~~~~~~~~~PUBLIC METHODS~~~~~~~~~~~~~~#
+    #~~~~~~~~~~~~~~PUBLIC METHODS~~~~~~~~~~~~~~#
     def close (self):
         try:
             self.log.debug ("Closing file:{}".format(self.fn))
@@ -129,7 +131,7 @@ class Writer ():
         except Exception as E:
             print (E)
         finally:
-            self.log.debug("\tSequences writen: {}".format(self.n_seq))
+            self.log.debug("Sequences writen: {}".format(self.n_seq))
 
     def write (self, read_id, seq, qual):
         """Add new sequence to fastq record"""
