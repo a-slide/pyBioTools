@@ -36,7 +36,8 @@ def Reads_index (
         Filter out supplementary alignment
     """
     # Define logger
-    logger = set_logger (verbose=verbose, quiet=quiet)
+    logger = get_logger (name="Alignment_Reads_index", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment Reads_index")
 
     # Check bam
     logger.info("Checking Bam file")
@@ -46,34 +47,36 @@ def Reads_index (
     logger.info("Parsing reads")
     c = defaultdict (Counter)
     idx_fn = input_fn+".idx.gz"
-    with pysam.AlignmentFile(input_fn) as bam, gzip.open(idx_fn, "wt") as idx, tqdm(unit=" Reads", disable=not progress) as pbar:
-        try:
-            while True:
-                # Save pointer and read_id
-                p = bam.tell()
-                read = next(bam)
-                pbar.update()
+    try:
+        with pysam.AlignmentFile(input_fn) as bam, gzip.open(idx_fn, "wt") as idx, tqdm(unit=" Reads", disable=not progress) as pbar:
+            try:
+                while True:
+                    # Save pointer and read_id
+                    p = bam.tell()
+                    read = next(bam)
+                    pbar.update()
 
-                valid_read, read_status = _eval_read(
-                    read=read,
-                    skip_unmapped = skip_unmapped,
-                    skip_secondary = skip_secondary,
-                    skip_supplementary = skip_supplementary)
+                    valid_read, read_status = _eval_read(
+                        read=read,
+                        skip_unmapped = skip_unmapped,
+                        skip_secondary = skip_secondary,
+                        skip_supplementary = skip_supplementary)
 
-                if valid_read:
-                    c["Reads retained"][read_status]+=1
-                    c["Reads retained"]["total"]+=1
-                    idx.write("{}\t{}\n".format(read.query_name, p))
-                else:
-                    c["Reads discarded"][read_status]+=1
-                    c["Reads discarded"]["total"]+=1
+                    if valid_read:
+                        c["Reads retained"][read_status]+=1
+                        c["Reads retained"]["total"]+=1
+                        idx.write("{}\t{}\n".format(read.query_name, p))
+                    else:
+                        c["Reads discarded"][read_status]+=1
+                        c["Reads discarded"]["total"]+=1
 
-        except (StopIteration, KeyboardInterrupt):
-            pass
+            except (StopIteration, KeyboardInterrupt):
+                pass
 
     # Print read count summary
-    logger.debug("\nRead counts summary")
-    logger.debug(dict_to_str(c, ntab=1))
+    finally:
+        logger.info("Read counts summary")
+        log_dict(c, logger.info)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Reads_sample~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Reads_sample (
@@ -105,7 +108,8 @@ def Reads_sample (
     """
 
     # Define logger
-    logger = set_logger (verbose=verbose, quiet=quiet)
+    logger = get_logger (name="Alignment_Reads_sample", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment Reads_sample")
 
     # Checking bam and index reads if needed
     logger.info("Checking Bam and index file")
@@ -148,7 +152,7 @@ def Reads_sample (
                     read = next(bam_in)
                     bam_out.write(read)
 
-            logger.info("\tIndexing output bam file")
+            logger.info("Indexing output bam file")
             pysam.index(output_fn)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Filter~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -196,7 +200,8 @@ def Filter (
         List of references on which the reads should not be mapped.
     """
     # Define logger
-    logger = set_logger (verbose=verbose, quiet=quiet)
+    logger = get_logger (name="Alignment_Filter", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment Filter")
 
     # Check bam
     logger.info("Checking input bam file")
@@ -205,37 +210,39 @@ def Filter (
     # Get random reads
     logger.info("Parsing reads")
     c = defaultdict (Counter)
-    with pysam.AlignmentFile(input_fn) as bam_in:
-        with pysam.AlignmentFile(output_fn, "wb", header=bam_in.header) as bam_out:
-            for read in tqdm(bam_in, desc="\t", unit=" Reads", disable=not progress):
-                valid_read, read_status = _eval_read(
-                    read = read,
-                    skip_unmapped = skip_unmapped,
-                    skip_secondary = skip_secondary,
-                    skip_supplementary = skip_supplementary,
-                    orientation = orientation,
-                    min_read_len = min_read_len,
-                    min_align_len = min_align_len,
-                    min_mapq = min_mapq,
-                    min_freq_identity = min_freq_identity,
-                    select_ref = select_ref,
-                    exclude_ref = exclude_ref)
+    try:
+        with pysam.AlignmentFile(input_fn) as bam_in:
+            with pysam.AlignmentFile(output_fn, "wb", header=bam_in.header) as bam_out:
+                for read in tqdm(bam_in, desc="\t", unit=" Reads", disable=not progress):
+                    valid_read, read_status = _eval_read(
+                        read = read,
+                        skip_unmapped = skip_unmapped,
+                        skip_secondary = skip_secondary,
+                        skip_supplementary = skip_supplementary,
+                        orientation = orientation,
+                        min_read_len = min_read_len,
+                        min_align_len = min_align_len,
+                        min_mapq = min_mapq,
+                        min_freq_identity = min_freq_identity,
+                        select_ref = select_ref,
+                        exclude_ref = exclude_ref)
 
-                if valid_read:
-                    c["Reads retained"][read_status]+=1
-                    c["Reads retained"]["total"]+=1
-                    bam_out.write(read)
-                else:
-                    c["Reads discarded"][read_status]+=1
-                    c["Reads discarded"]["total"]+=1
+                    if valid_read:
+                        c["Reads retained"][read_status]+=1
+                        c["Reads retained"]["total"]+=1
+                        bam_out.write(read)
+                    else:
+                        c["Reads discarded"][read_status]+=1
+                        c["Reads discarded"]["total"]+=1
 
-    # Check Bam readability and index
-    logger.info("Indexing output bam file")
-    pysam.index(output_fn)
+        # Check Bam readability and index
+        logger.info("Indexing output bam file")
+        pysam.index(output_fn)
 
     # Print read count summary
-    logger.debug("\nRead counts summary")
-    logger.debug(dict_to_str(c, ntab=1))
+    finally:
+        logger.info("Read counts summary")
+        log_dict(c, logger.info)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~To_fastq~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def To_fastq (
@@ -261,14 +268,14 @@ def To_fastq (
         Ignore paired_end information and output everything in a single file.
     """
     # Define logger
-    logger = set_logger (verbose=verbose, quiet=quiet)
-    counter = Counter()
+    logger = get_logger (name="Alignment_To_fastq", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment To_fastq")
+
+    # Open output fastq file writers
+    fastq_r1_fp = Fastq.Writer(output_r1_fn, verbose=verbose, quiet=quiet)
+    fastq_r2_fp = Fastq.Writer(output_r2_fn, verbose=verbose, quiet=quiet) if output_r2_fn else None
 
     try:
-        # Open output fastq file writers
-        fastq_r1_fp = Fastq.Writer(output_r1_fn, verbose=verbose)
-        fastq_r2_fp = Fastq.Writer(output_r2_fn, verbose=verbose) if output_r2_fn else None
-
         logger.info("Parsing reads")
         input_fn_list = input_fn if isinstance(input_fn, (list, tuple)) else [input_fn]
         for input_fn in input_fn_list:
@@ -300,7 +307,7 @@ def To_fastq (
                             if progress: pbar.update()
 
             except StopIteration:
-                logger.debug("\tReached end of input file {}".format(input_fn))
+                logger.debug("Reached end of input file {}".format(input_fn))
 
     # Close all output files
     finally:
@@ -309,6 +316,77 @@ def To_fastq (
                 fp.close()
             except:
                 pass
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Split~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+def Split (
+    input_fn:str,
+    output_dir:str="",
+    n_files:int=10,
+    verbose=False,
+    quiet=False,
+    progress=False,
+    **kwargs):
+    """
+    Split reads in a bam file in N files. The input bam file has to be sorted by coordinates and indexed
+    * input_fn
+        Path to the bam file to filter
+    * output_dir
+        Path to the directory where to write split bam files.
+        Files generated have the same basename as the source file and are suffixed with numbers starting from 1
+    * n_files
+        Number of file to split the original file into
+    """
+    # Define logger
+    logger = get_logger (name="Alignment_Split", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment Split")
+
+    # Define output dir
+    output_dir = os.path.abspath(output_dir)
+    mkdir (output_dir, exist_ok=True)
+
+    # Check bam
+    logger.info("Checking input bam file")
+    _check_bam (input_fn)
+    fn_basename = os.path.basename(input_fn).rpartition(".")[0]
+
+    logger.info("Parsing reads")
+    c = Counter()
+    try:
+        with pysam.AlignmentFile(input_fn) as bam_in:
+            logger.debug("Counting reads")
+            total = bam_in.mapped+bam_in.unmapped
+            n_reads_per_chunk = total // n_files
+            c["Reads from index"] = total
+            c["Reads per file"] = n_reads_per_chunk
+
+            with tqdm(total=total, desc="\tReading", unit=" Reads", disable=not progress) as pbar:
+                for chunk in range(n_files):
+                    output_fn = os.path.join(output_dir, "{}_{}.bam".format(fn_basename, chunk))
+                    logger.debug("Open ouput file '{}'".format(output_fn))
+                    with pysam.AlignmentFile(output_fn, "wb", template=bam_in) as bam_out:
+
+                        while True:
+                            try:
+                                read = next(bam_in)
+                            except StopIteration:
+                                logger.debug("Reached end of input file")
+                                break
+
+                            bam_out.write(read)
+                            pbar.update()
+                            c["Reads writen"]+=1
+
+                            if c["Reads writen"]%n_reads_per_chunk == 0 and chunk < n_files-1:
+                                break
+
+                    # Close file and index
+                    logger.debug("Close and index output file '{}'".format(output_fn))
+                    pysam.index (output_fn)
+
+    # Print read count summary
+    finally:
+        logger.info("Read counts summary")
+        log_dict(c, logger.info)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~PRIVATE FUNCTION~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def _next_valid (fp):
