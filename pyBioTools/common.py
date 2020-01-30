@@ -43,11 +43,17 @@ def super_iglob(pathname, recursive=False):
         raise ValueError ("Invalid file type")
 
 def mkdir (fn, exist_ok=False):
-    """ Create directory recursively. Raise IO error if path exist or if error at creation """
+    """ Create directory recursivelly. Raise IO error if path exist or if error at creation """
     try:
         os.makedirs (fn, exist_ok=exist_ok)
     except:
         raise pyBioToolsError ("Error creating output folder `{}`".format(fn))
+
+def mkbasedir (fn, exist_ok=False):
+    """ Create directory for a given file recursivelly. Raise IO error if path exist or if error at creation """
+    dir_fn = os.path.dirname(fn)
+    if dir_fn:
+        mkdir (dir_fn, exist_ok=True)
 
 def doc_func (func):
     """Parse the function description string"""
@@ -216,7 +222,7 @@ class CustomFormatter(logging.Formatter):
         return formatter.format(record)
 
 def log_dict (d, logger, level=1):
-    """ Transform a multilevel dict to a tabulated str """
+    """ log a multilevel dict """
 
     if isinstance(d, Counter):
         for i, j in d.most_common():
@@ -228,6 +234,11 @@ def log_dict (d, logger, level=1):
                 log_dict(j, logger, level=level+1)
             else:
                 logger("{}{}: {}".format(" "*level, i, j))
+
+def log_list (l, logger):
+    """ log a list """
+    for i in l:
+        logger("* {}".format(i))
 
 def head (fp, n=10, ignore_comment_line=False, comment_char="#", max_char_line=300, sep="\t", max_char_col=30, **kwargs):
     """
