@@ -5,7 +5,7 @@ from setuptools import setup
 
 # Define package info
 name = "pyBioTools"
-version = '0.2.0.6'
+version = '0.2.0.7'
 description = "pyBioTools is a collection of tools to manipulate biological sequences"
 with open("README.md", "r") as fh:
     long_description = fh.read()
