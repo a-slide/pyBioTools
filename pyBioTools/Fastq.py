@@ -46,7 +46,11 @@ def Filter (
 
     # Define source if directory given
     if os.path.isdir(input_fn):
-        input_fn = [os.path.join(input_fn, "*.fastq"), os.path.join(input_fn, "*.fq")]
+        input_fn = [
+            os.path.join(input_fn, "*.fastq"),
+            os.path.join(input_fn, "*.fq"),
+            os.path.join(input_fn, "*.fastq.gz"),
+            os.path.join(input_fn, "*.fq.gz")]
 
     # Define output mode
     open_fun, open_mode = (gzip.open, "wt") if is_gziped(output_fn) else (open, "w")
