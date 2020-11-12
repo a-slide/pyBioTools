@@ -1,7 +1,7 @@
 version:
   major: 0
   minor: 2
-  micro: 2
+  micro: 3
   a: null
   b: null
   rc: null
@@ -20,10 +20,10 @@ managed_values:
   __package_licence_url__: https://www.gnu.org/licenses/gpl-3.0.en.html
   __minimal_python__: '>=3.6'
   __entry_point1__: pyBioTools=pyBioTools.__main__:main
-  __dependency_1__: tqdm>=4.32.1
-  __dependency_2__: numpy>=1.16.4
-  __dependency_3__: pysam>=0.15.2
-  __dependency_4__: pandas>=0.24.2
+  __dependency_1__: tqdm>=4.51.0
+  __dependency_2__: numpy>=1.19.4
+  __dependency_3__: pysam>=0.16.0
+  __dependency_4__: pandas>=1.1.4
   __classifiers_1__: 'Development Status :: 3 - Alpha'
   __classifiers_2__: 'Intended Audience :: Science/Research'
   __classifiers_3__: 'Topic :: Scientific/Engineering :: Bio-Informatics'

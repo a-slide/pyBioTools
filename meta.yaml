@@ -1,4 +1,4 @@
-{% set version = "0.2.2.dev1" %}
+{% set version = "0.2.3.dev1" %}
 {% set name = "pyBioTools" %}
 
 package:
@@ -21,10 +21,10 @@ requirements:
     - pip>=19.2.1
     - ripgrep>=11.0.1
   run:
-    - tqdm>=4.32.1
-    - numpy>=1.16.4
-    - pysam>=0.15.2
-    - pandas>=0.24.2
+    - tqdm>=4.51.0
+    - numpy>=1.19.4
+    - pysam>=0.16.0
+    - pandas>=1.1.4
 
 test:
   imports:
