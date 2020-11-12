@@ -1,6 +1,6 @@
-# Welcome to pyBioTools v0.2.1.dev3 documentation
+# Welcome to __package_name__ v__package_version__ documentation
 
-**pyBioTools is a collection of python tools to manipulate biological sequences**
+**__package_description__**
 
 The package currently contains the following modules:
 

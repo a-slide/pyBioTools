@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Define self package variable
-__version__ = '0.2.0.9'
-__description__="pyBioTools is a collection of tools to manipulate biological sequences"
-__all__ = ["Alignment", "Fastq", "Fasta"]
+__name__ = "pyBioTools"
+__version__ = "0.2.1.dev3"
+__description__ = "pyBioTools is a collection of python tools to manipulate biological sequences"
+__url__ = "https://github.com/a-slide/pyBioTools"
+__licence__ = "GPLv3"
+__author__ = "Adrien Leger"
+__all__ = ["Alignment", "Annotation", "Fastq", "Fasta"]

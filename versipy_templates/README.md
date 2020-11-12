@@ -1,4 +1,4 @@
-# pyBioTools v0.2.1.dev3
+# __package_name__ v__package_version__
 
 [![GitHub license](https://img.shields.io/github/license/a-slide/pyBioTools.svg)](https://github.com/a-slide/pyBioTools/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Python3-yellow.svg)](https://www.python.org/)
@@ -11,11 +11,11 @@
 
 ---
 
-**pyBioTools is a collection of python tools to manipulate biological sequences**
+**__package_description__**
 
 ---
 
-Full documentation is available at https://adrienleger.com/pyBioTools/
+Full documentation is available at __package_doc_url__
 
 Please be aware that pyBioTools is a research package that is still under development.
 
@@ -27,22 +27,22 @@ Thank you
 
 ## Classifiers
 
-* Development Status :: 3 - Alpha
-* Intended Audience :: Science/Research
-* Topic :: Scientific/Engineering :: Bio-Informatics
-* License :: OSI Approved :: GNU General Public License v3 (GPLv3)
-* Programming Language :: Python :: 3
+* __classifiers_1__
+* __classifiers_2__
+* __classifiers_3__
+* __classifiers_4__
+* __classifiers_5__
 
 ## citation
 
-Adrien Leger. a-slide/pyBioTools. Zenodo. http://doi.org/10.5281/zenodo.3235625
+__citation__
 
 ## licence
 
-GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
+__package_licence__ (__package_licence_url__)
 
-Copyright © 2020 Adrien Leger
+Copyright © 2020 __author_name__
 
 ## Authors
 
-* Adrien Leger / aleg@ebi.ac.uk / https://adrienleger.com
+* __author_name__ / __author_email__ / __author_url__

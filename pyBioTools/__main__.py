@@ -91,6 +91,7 @@ def main ():
     arg_from_docstr(sp_a_st, f, "output_dir" , "o")
     arg_from_docstr(sp_a_st, f, "n_files" , "n")
     arg_from_docstr(sp_a_st, f, "output_fn_list" , "l")
+    arg_from_docstr(sp_a_st, f, "index", "x")
 
     #~~~~~Fastq suparser~~~~~#
     sp_fq = subparsers.add_parser("Fastq", description="Fastq format related functions")
