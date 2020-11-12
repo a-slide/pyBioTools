@@ -1,4 +1,4 @@
-# Welcome to pyBioTools v0.2.1.dev5 documentation
+# Welcome to pyBioTools v0.2.2.dev1 documentation
 
 **pyBioTools is a collection of python tools to manipulate biological sequences**
 

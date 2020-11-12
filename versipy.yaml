@@ -1,12 +1,12 @@
 version:
   major: 0
   minor: 2
-  micro: 1
+  micro: 2
   a: null
   b: null
   rc: null
   post: null
-  dev: 5
+  dev: 1
 managed_values:
   __package_name__: pyBioTools
   __package_description__: pyBioTools is a collection of python tools to manipulate

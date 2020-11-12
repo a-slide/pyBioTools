@@ -1,4 +1,4 @@
-{% set version = "0.2.1.dev5" %}
+{% set version = "0.2.2.dev1" %}
 {% set name = "pyBioTools" %}
 
 package:
