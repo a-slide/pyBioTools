@@ -6,7 +6,7 @@ version:
   b: null
   rc: null
   post: null
-  dev: 1
+  dev: 2
 managed_values:
   __package_name__: pyBioTools
   __package_description__: pyBioTools is a collection of python tools to manipulate

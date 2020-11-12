@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 setup(
     name="pyBioTools",
     description="pyBioTools is a collection of python tools to manipulate biological sequences",
-    version="0.2.3.dev1",
+    version="0.2.3.dev2",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/a-slide/pyBioTools",
