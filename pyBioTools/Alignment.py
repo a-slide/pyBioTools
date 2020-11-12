@@ -323,6 +323,7 @@ def Split (
     output_dir:str="",
     n_files:int=10,
     output_fn_list:[str]=[],
+    index:bool=False,
     verbose=False,
     quiet=False,
     progress=False,
@@ -340,6 +341,8 @@ def Split (
     * output_fn_list
         As an alternative to output_dir and n_files one can instead give a list of output files.
         Reads will be automatically split between the files in the same order as given
+    * index
+        Index output BAM files
     """
     # Define logger
     logger = get_logger (name="Alignment_Split", verbose=verbose, quiet=quiet)
@@ -392,10 +395,12 @@ def Split (
                             if n_reads == n_reads_per_chunk and chunk < n_files-1:
                                 break
 
-                    # Close file and index
-                    logger.debug("Close and index output file '{}'".format(output_fn))
-                    logger.debug("Reads written: {:,}".format(n_reads))
-                    pysam.index (output_fn)
+        # Close file and index
+        logger.debug("Close output file '{}'".format(output_fn))
+        logger.debug("Reads written: {:,}".format(n_reads))
+        if index:
+            logger.debug("index output file '{}'".format(output_fn))
+            pysam.index (output_fn)
 
     # Print read count summary
     finally:
