@@ -7,6 +7,8 @@ install:
   - pip install nbconvert requests jinja2 mkdocs mkdocs-material pygments pymdown-extensions mkdocs-exclude
   # Install this one after or it raises an error
   - pip install mknotebooks
+  # Fix temp issue with pypi deployment
+  - pip install keyring==21.4.0
 
 script: true
 
