@@ -9,3 +9,4 @@
 2020-11-12 11:21:57.306042	0.2.3.dev1	update dependencies
 2020-11-12 11:42:28.305638	0.2.3.dev2	fix dependency issue dependencies
 2020-11-12 12:09:39.968304	0.2.4	Add index option to alignment split and add versipy version managment
+2020-11-13 12:03:24.532684	0.2.4.post1	Fix issue in split read indexing
