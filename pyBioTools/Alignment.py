@@ -395,12 +395,12 @@ def Split (
                             if n_reads == n_reads_per_chunk and chunk < n_files-1:
                                 break
 
-        # Close file and index
-        logger.debug("Close output file '{}'".format(output_fn))
-        logger.debug("Reads written: {:,}".format(n_reads))
-        if index:
-            logger.debug("index output file '{}'".format(output_fn))
-            pysam.index (output_fn)
+                    # Close file and index
+                    logger.debug("Close output file '{}'".format(output_fn))
+                    logger.debug("Reads written: {:,}".format(n_reads))
+                    if index:
+                        logger.debug("index output file '{}'".format(output_fn))
+                        pysam.index (output_fn)
 
     # Print read count summary
     finally:
