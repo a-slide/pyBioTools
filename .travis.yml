@@ -1,6 +1,10 @@
 dist: xenial
 language: python
 python: 3.6
+branches:
+  except:
+  - master
+  - dev
 
 install:
   # Install other pip dependencies
