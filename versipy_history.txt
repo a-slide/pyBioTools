@@ -13,3 +13,4 @@
 2021-01-19 13:54:48.206018	0.2.4.post1.dev1	Versipy auto bump-up
 2021-01-19 15:44:47.386959	0.2.4.post1.dev2	Test deployment
 2021-01-19 15:51:27.783273	0.2.5	Add Seqsum module and improve logging and multiple input files hangling
+2021-01-19 15:58:54.576185	0.2.5.post1	Fix doc deployment
