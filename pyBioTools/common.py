@@ -12,6 +12,7 @@ import gzip
 
 # Third party library imports
 import pysam
+import colorlog
 
 #~~~~~~~~~~~~~~FUNCTIONS~~~~~~~~~~~~~~#
 
@@ -29,16 +30,21 @@ def is_gziped (fp, **kwargs):
     """ Return True if the file is Gziped else False """
     return fp[-2:].lower() == "gz"
 
-def super_iglob(pathname, recursive=False):
+def super_iglob (pathname, recursive=False, regex_list=[]):
     """ Same as iglob but pass multiple path regex instead of one. does not store anything in memory"""
     if type(pathname) == str:
-        for path in iglob(pathname=pathname, recursive=recursive):
-            yield(path)
+        pathname = [pathname]
 
-    elif type(pathname) in [list, tuple, set]:
+    if type(pathname) in [list, tuple, set]:
         for paths in pathname:
             for path in iglob(pathname=paths, recursive=recursive):
-                yield(path)
+                if os.path.isdir(path) and regex_list:
+                    for regex in regex_list:
+                        regex_paths = os.path.join(path, regex)
+                        for regex_path in iglob(pathname=regex_paths, recursive=recursive):
+                            yield regex_path
+                elif os.path.isfile(path):
+                    yield path
     else:
         raise ValueError ("Invalid file type")
 
@@ -194,12 +200,30 @@ def jhelp (f:"python function or method"):
     display (Markdown(s))
 
 def get_logger (name=None, verbose=False, quiet=False):
-    """Set logger to appropriate log level"""
+    """Multilevel colored log using colorlog"""
+
+    # Define conditional color formatter
+    formatter = colorlog.LevelFormatter(
+        fmt = {
+            'DEBUG':'%(log_color)s\t[DEBUG]: %(msg)s',
+            'INFO': '%(log_color)s\t%(msg)s',
+            'WARNING': '%(log_color)s## %(msg)s ##',
+            'ERROR': '%(log_color)sERROR: %(msg)s',
+            'CRITICAL': '%(log_color)sCRITICAL: %(msg)s'},
+        log_colors={
+            'DEBUG': 'white',
+            'INFO': 'green',
+            'WARNING': 'bold_blue',
+            'ERROR': 'bold_red',
+            'CRITICAL': 'bold_purple'},
+        reset=True)
+
+    # Define logger with custom formatter
     logging.basicConfig(format='%(message)s')
-    logging.getLogger().handlers[0].setFormatter(CustomFormatter())
+    logging.getLogger().handlers[0].setFormatter(formatter)
     logger = logging.getLogger(name)
 
-    # Define overall verbose level
+    # Define logging level depending on verbosity
     if verbose:
         logger.setLevel(logging.DEBUG)
     elif quiet:
@@ -208,18 +232,6 @@ def get_logger (name=None, verbose=False, quiet=False):
         logger.setLevel(logging.INFO)
 
     return logger
-
-class CustomFormatter(logging.Formatter):
-    """"""
-    FORMATS = {
-        logging.WARNING: "## %(msg)s ##",
-        logging.INFO: "\t%(msg)s",
-        logging.DEBUG: "\t[DEBUG] [%(name)s] %(msg)s"}
-
-    def format(self, record):
-        log_fmt = self.FORMATS[record.levelno]
-        formatter = logging.Formatter(log_fmt)
-        return formatter.format(record)
 
 def log_dict (d, logger, level=1):
     """ log a multilevel dict """
