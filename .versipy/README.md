@@ -3,6 +3,7 @@
 [![GitHub license](https://img.shields.io/github/license/a-slide/pyBioTools.svg)](https://github.com/a-slide/pyBioTools/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Python3-yellow.svg)](https://www.python.org/)
 [![DOI](https://zenodo.org/badge/111435767.svg)](https://zenodo.org/badge/latestdoi/111435767)
+[![Build Status](https://travis-ci.com/a-slide/pyBioTools.svg?branch=master)](https://travis-ci.com/a-slide/pyBioTools)
 
 [![PyPI version](https://badge.fury.io/py/pyBioTools.svg)](https://badge.fury.io/py/pyBioTools)
 [![PyPI downloads](https://pepy.tech/badge/pyBioTools)](https://pepy.tech/project/pyBioTools)
