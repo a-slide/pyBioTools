@@ -11,3 +11,4 @@
 2020-11-12 12:09:39.968304	0.2.4	Add index option to alignment split and add versipy version managment
 2020-11-13 12:03:24.532684	0.2.4.post1	Fix issue in split read indexing
 2021-01-19 13:54:48.206018	0.2.4.post1.dev1	Versipy auto bump-up
+2021-01-19 15:44:47.386959	0.2.4.post1.dev2	Test deployment

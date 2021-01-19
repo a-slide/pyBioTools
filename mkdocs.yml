@@ -22,6 +22,9 @@ nav:
         - Fastq:
             - CLI : usage/Fastq/CLI.ipynb
             - API : usage/Fastq/API.ipynb
+        - Seqsum:
+            - CLI : usage/Seqsum/CLI.ipynb
+            - API : usage/Seqsum/API.ipynb
     - Citing: citing.md
     - Contributing Guidelines: contributing.md
     - Code of conduct: code_of_conduct.md
