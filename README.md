@@ -1,4 +1,4 @@
-# pyBioTools v0.2.4.post1
+# pyBioTools v0.2.4.post1.dev1
 
 [![GitHub license](https://img.shields.io/github/license/a-slide/pyBioTools.svg)](https://github.com/a-slide/pyBioTools/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Python3-yellow.svg)](https://www.python.org/)
@@ -13,9 +13,9 @@
 
 **pyBioTools is a collection of python tools to manipulate biological sequences**
 
----
-
 Full documentation is available at https://adrienleger.com/pyBioTools/
+
+## Disclaimer
 
 Please be aware that pyBioTools is a research package that is still under development.
 
