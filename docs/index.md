@@ -1,4 +1,4 @@
-# Welcome to pyBioTools v0.2.5.post1 documentation
+# Welcome to pyBioTools v0.2.5.post2 documentation
 
 **pyBioTools is a collection of python tools to manipulate biological sequences**
 
@@ -17,3 +17,10 @@ This module contains tools to manipulate aligned reads in BAM format.
 
 * [CLI usage](usage/Alignment/CLI)
 * [API usage](usage/Alignment/API)
+
+## Seqsum
+
+This module contains tools to manipulate Oxford nanopore Sequencing summary files
+
+* [CLI usage](usage/Seqsum/CLI)
+* [API usage](usage/Seqsum/API)
