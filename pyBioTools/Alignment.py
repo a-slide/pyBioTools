@@ -19,9 +19,9 @@ def Reads_index (
     skip_unmapped:bool=False,
     skip_secondary:bool=False,
     skip_supplementary:bool=False,
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     Index reads found in a coordinated sorted bam file by read_id.
@@ -86,9 +86,9 @@ def Reads_sample (
     n_reads:int=1000,
     n_samples:int=1,
     rand_seed:int=42,
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     Randomly sample `n_reads` reads from a bam file and write downsampled files in `n_samples` bam files.
@@ -169,9 +169,9 @@ def Filter (
     min_freq_identity:float=0,
     select_ref:[str]=[],
     exclude_ref:[str]=[],
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     * input_fn
@@ -250,9 +250,9 @@ def To_fastq (
     output_r1_fn:str,
     output_r2_fn:str=None,
     ignore_paired_end:bool=False,
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     Dump reads from an alignment file or set of alignment file(s) to a fastq or pair of fastq file(s).
@@ -324,9 +324,9 @@ def Split (
     n_files:int=10,
     output_fn_list:[str]=[],
     index:bool=False,
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     Split reads in a bam file in N files. The input bam file has to be sorted by coordinates and indexed.

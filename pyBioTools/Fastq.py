@@ -14,15 +14,15 @@ from pyBioTools.common import *
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~filter_reads~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Filter (
-    input_fn:str,
+    input_fn:[str],
     output_fn:str,
     min_len:int=None,
     min_qual:float=None,
     remove_duplicates:bool=False,
     qual_offset:int=33,
-    verbose=False,
-    quiet=False,
-    progress=False,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
     **kwargs):
     """
     Filter fastq reads based on their length, mean quality and the presence of duplicates. Can also be used to concatenate reads from multiple files in a single one.
@@ -44,14 +44,6 @@ def Filter (
     logger = get_logger (name="Fastq_Filter", verbose=verbose, quiet=quiet)
     logger.warning("Running Fastq Filter")
 
-    # Define source if directory given
-    if os.path.isdir(input_fn):
-        input_fn = [
-            os.path.join(input_fn, "*.fastq"),
-            os.path.join(input_fn, "*.fq"),
-            os.path.join(input_fn, "*.fastq.gz"),
-            os.path.join(input_fn, "*.fq.gz")]
-
     # Define output mode
     open_fun, open_mode = (gzip.open, "wt") if is_gziped(output_fn) else (open, "w")
 
@@ -63,7 +55,7 @@ def Filter (
     try:
         with tqdm (desc="Reads processed ", unit=" reads", disable=not progress) as p:
             with open_fun(output_fn, open_mode) as fp_out:
-                for fn in super_iglob (input_fn):
+                for fn in super_iglob (input_fn, regex_list=["*.fastq","*.fq","*.fastq.gz","*.fq.gz"]):
                     c["source files"]+=1
                     with pysam.FastxFile(fn) as fp_in:
                         logger.debug("Reading file {}".format(fn))
