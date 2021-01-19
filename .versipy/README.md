@@ -13,11 +13,11 @@
 
 **__package_description__**
 
----
-
 Full documentation is available at __package_doc_url__
 
-Please be aware that pyBioTools is a research package that is still under development.
+## Disclaimer
+
+Please be aware that __package_name__ is a research package that is still under development.
 
 It was tested under Linux Ubuntu 16.04 and in an HPC environment running under Red Hat Enterprise 7.1.
 

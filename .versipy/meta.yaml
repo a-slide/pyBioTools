@@ -25,6 +25,7 @@ requirements:
     - __dependency_2__
     - __dependency_3__
     - __dependency_4__
+    - __dependency_5__
 
 test:
   imports:

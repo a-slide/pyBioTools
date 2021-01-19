@@ -6,7 +6,7 @@ version:
   b: null
   rc: null
   post: 1
-  dev: null
+  dev: 1
 managed_values:
   __package_name__: pyBioTools
   __package_description__: pyBioTools is a collection of python tools to manipulate
@@ -24,6 +24,7 @@ managed_values:
   __dependency_2__: numpy>=1.19.4
   __dependency_3__: pysam>=0.16.0
   __dependency_4__: pandas>=1.1.4
+  __dependency_5__: colorlog>=4.1.0
   __classifiers_1__: 'Development Status :: 3 - Alpha'
   __classifiers_2__: 'Intended Audience :: Science/Research'
   __classifiers_3__: 'Topic :: Scientific/Engineering :: Bio-Informatics'
@@ -31,9 +32,9 @@ managed_values:
   __classifiers_5__: 'Programming Language :: Python :: 3'
   __citation__: Adrien Leger. a-slide/pyBioTools. Zenodo. http://doi.org/10.5281/zenodo.3235625
 managed_files:
-  versipy_templates/setup.py: setup.py
-  versipy_templates/meta.yaml: meta.yaml
-  versipy_templates/__init__.py: pyBioTools/__init__.py
-  versipy_templates/README.md: README.md
-  versipy_templates/mkdocs.yml: mkdocs.yml
-  versipy_templates/index.md: docs/index.md
+  .versipy/setup.py: setup.py
+  .versipy/meta.yaml: meta.yaml
+  .versipy/__init__.py: pyBioTools/__init__.py
+  .versipy/README.md: README.md
+  .versipy/mkdocs.yml: mkdocs.yml
+  .versipy/index.md: docs/index.md

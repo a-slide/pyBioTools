@@ -20,7 +20,7 @@ setup(
     license="__package_licence__",
     python_requires="__minimal_python__",
     classifiers=["__classifiers_1__", "__classifiers_2__", "__classifiers_3__", "__classifiers_4__", "__classifiers_5__"],
-    install_requires=["__dependency_1__", "__dependency_2__", "__dependency_3__", "__dependency_4__"],
+    install_requires=["__dependency_1__", "__dependency_2__", "__dependency_3__", "__dependency_4__",  "__dependency_5__"],
     packages=["__package_name__"],
     entry_points={"console_scripts": ["__entry_point1__"]},
 )
