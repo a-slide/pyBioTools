@@ -1,0 +1,1015 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="pyBioTools is a collection of python tools to manipulate biological sequences">
+      
+      
+      
+        <meta name="author" content="Adrien Leger">
+      
+      
+        <link rel="canonical" href="https://adrienleger.com/pyBioTools/usage/Seqsum/API/">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.5">
+    
+    
+      
+        <title>API - pyBioTools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#seqsum-api-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://adrienleger.com/pyBioTools/" title="pyBioTools" class="md-header-nav__button md-logo" aria-label="pyBioTools">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            pyBioTools
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://adrienleger.com/pyBioTools/" title="pyBioTools" class="md-nav__button md-logo" aria-label="pyBioTools">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    pyBioTools
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation/" class="md-nav__link">
+        Installation instructions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      
+      <label class="md-nav__link" for="nav-3">
+        Usage
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" >
+      
+      <label class="md-nav__link" for="nav-3-1">
+        Alignment
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Alignment" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-1">
+          <span class="md-nav__icon md-icon"></span>
+          Alignment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Alignment/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Alignment/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" >
+      
+      <label class="md-nav__link" for="nav-3-2">
+        Fastq
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fastq" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-2">
+          <span class="md-nav__icon md-icon"></span>
+          Fastq
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3" checked>
+      
+      <label class="md-nav__link" for="nav-3-3">
+        Seqsum
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Seqsum" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-3">
+          <span class="md-nav__icon md-icon"></span>
+          Seqsum
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-package" class="md-nav__link">
+    Import package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge" class="md-nav__link">
+    Merge
+  </a>
+  
+    <nav class="md-nav" aria-label="Merge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-regex-instead" class="md-nav__link">
+    Using a regex instead
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files-with-non-matching-header-are-skipped" class="md-nav__link">
+    Files with non-matching header are skipped
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../citing/" class="md-nav__link">
+        Citing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        Contributing Guidelines
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../code_of_conduct/" class="md-nav__link">
+        Code of conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../licence/" class="md-nav__link">
+        Licence
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-package" class="md-nav__link">
+    Import package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge" class="md-nav__link">
+    Merge
+  </a>
+  
+    <nav class="md-nav" aria-label="Merge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-regex-instead" class="md-nav__link">
+    Using a regex instead
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files-with-non-matching-header-are-skipped" class="md-nav__link">
+    Files with non-matching header are skipped
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/a-slide/pyBioTools/edit/master/docs/usage/Seqsum/API.ipynb" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="seqsum-api-usage">Seqsum API Usage</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="import-package">Import package</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyBioTools</span> <span class="kn">import</span> <span class="n">Seqsum</span>
+<span class="kn">from</span> <span class="nn">pyBioTools.common</span> <span class="kn">import</span> <span class="n">jhelp</span><span class="p">,</span> <span class="n">head</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="merge">Merge</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Seqsum</span><span class="o">.</span><span class="n">Merge</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>Merge</strong> (input_fn, output_fn, old_filename_synthax, verbose, quiet, progress, kwargs)</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [list(str)]</li>
+</ul>
+<p>Sequencing summary file path or directory containing Sequencing summary file  or list of files, or regex or list of regex. It is quite flexible. Files can also be gzipped</p>
+<ul>
+<li><strong>output_fn</strong> (required) [str]</li>
+</ul>
+<p>Destination sequencing summary file. Automatically gzipped if the .gz extension is found</p>
+<ul>
+<li><strong>old_filename_synthax</strong> (default: False) [bool]</li>
+</ul>
+<p>Replace the <code>filename_fast5</code> field by <code>filename</code> as in older versions. Useful for nanopolish index compatibility</p>
+<ul>
+<li>
+<p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li>
+<p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li>
+<p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li>
+<p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Seqsum</span><span class="o">.</span><span class="n">Merge</span> <span class="p">([</span><span class="s2">&quot;./data/seqsum_new1.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;./data/seqsum_new2.tsv&quot;</span><span class="p">],</span> <span class="s2">&quot;./output/seqsum_merged_1.tsv&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">head</span> <span class="p">(</span><span class="s2">&quot;./output/seqsum_merged_1.tsv&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Seqsum Merge ##</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new1.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new1.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new2.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new2.tsv</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Files found: 2</span>
+<span class="ansi-green-fg">     Valid files: 2</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Only 19 lines in the file
+filename_fastq                 filename_fast5                 read_id                        run_id                         channel mux start_time duration num_events passes_filtering template_start num_events_template template_duration sequence_length_template mean_qscore_template strand_score_temp...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="using-a-regex-instead">Using a regex instead</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Seqsum</span><span class="o">.</span><span class="n">Merge</span> <span class="p">([</span><span class="s2">&quot;./data/seqsum*&quot;</span><span class="p">],</span> <span class="s2">&quot;./output/seqsum_merged_2.tsv.gz&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">head</span> <span class="p">(</span><span class="s2">&quot;./output/seqsum_merged_2.tsv.gz&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Seqsum Merge ##</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new2.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new2.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new1.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new1.tsv</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Files found: 2</span>
+<span class="ansi-green-fg">     Valid files: 2</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Only 19 lines in the file
+filename_fastq                 filename_fast5                 read_id                        run_id                         channel mux start_time duration num_events passes_filtering template_start num_events_template template_duration sequence_length_template mean_qscore_template strand_score_temp...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="files-with-non-matching-header-are-skipped">Files with non-matching header are skipped</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Seqsum</span><span class="o">.</span><span class="n">Merge</span> <span class="p">(</span><span class="s2">&quot;./data/*&quot;</span><span class="p">,</span> <span class="s2">&quot;./output/seqsum_merged_3.tsv.gz&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">head</span> <span class="p">(</span><span class="s2">&quot;./output/seqsum_merged_3.tsv.gz&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Seqsum Merge ##</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new2.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new2.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/Guppy-basecall-1D-DNA_sequencing_summary.txt.gz</span>
+<span class="ansi-red-intense-fg ansi-bold">ERROR: Header of file `./data/Guppy-basecall-1D-DNA_sequencing_summary.txt.gz` is not consistant</span>
+<span class="ansi-white-fg">    [DEBUG]: Skipping file ./data/Guppy-basecall-1D-DNA_sequencing_summary.txt.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/Guppy-2.1.3_basecall-1D-DNA_sequencing_summary.txt.gz</span>
+<span class="ansi-red-intense-fg ansi-bold">ERROR: Header of file `./data/Guppy-2.1.3_basecall-1D-DNA_sequencing_summary.txt.gz` is not consistant</span>
+<span class="ansi-white-fg">    [DEBUG]: Skipping file ./data/Guppy-2.1.3_basecall-1D-DNA_sequencing_summary.txt.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/seqsum_new1.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: End of file ./data/seqsum_new1.tsv</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/Guppy-2.2.4-basecall-1D-DNA_sequencing_summary+barcode.txt.gz</span>
+<span class="ansi-red-intense-fg ansi-bold">ERROR: Header of file `./data/Guppy-2.2.4-basecall-1D-DNA_sequencing_summary+barcode.txt.gz` is not consistant</span>
+<span class="ansi-white-fg">    [DEBUG]: Skipping file ./data/Guppy-2.2.4-basecall-1D-DNA_sequencing_summary+barcode.txt.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Reading file ./data/Guppy-2.1.3_basecall-1D-RNA_sequencing_summary.txt.gz</span>
+<span class="ansi-red-intense-fg ansi-bold">ERROR: Header of file `./data/Guppy-2.1.3_basecall-1D-RNA_sequencing_summary.txt.gz` is not consistant</span>
+<span class="ansi-white-fg">    [DEBUG]: Skipping file ./data/Guppy-2.1.3_basecall-1D-RNA_sequencing_summary.txt.gz</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Files found: 6</span>
+<span class="ansi-green-fg">     Invalid files: 4</span>
+<span class="ansi-green-fg">     Valid files: 2</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>Only 19 lines in the file
+filename_fastq                 filename_fast5                 read_id                        run_id                         channel mux start_time duration num_events passes_filtering template_start num_events_template template_duration sequence_length_template mean_qscore_template strand_score_temp...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 5c068f48-bb83-4458-9aac-49f6e2 397b0214f8b495477015f88b3c3d7b 1563    1   59.920000  1.032000 825        TRUE             59.976250      780                 0.975750          449                      12.316098            0.000000         ...
+PAF25252_fail_397b0214_0.fastq PAF25252_fail_397b0214_0.fast5 2e6bdc7f-fdd3-497f-91ea-06ad2b 397b0214f8b495477015f88b3c3d7b 1533    1   60.045000  1.475000 1180       FALSE            60.351250      935                 1.168750          534                      4.257434             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 63600975-81d1-4613-bd24-286885 397b0214f8b495477015f88b3c3d7b 2726    1   59.956500  1.429000 1143       TRUE             60.476500      727                 0.909000          372                      13.115662            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 81b3a753-0515-4c7d-ab5b-5e8a05 397b0214f8b495477015f88b3c3d7b 2912    1   60.213000  0.992500 794        TRUE             60.320500      708                 0.885000          326                      9.516800             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 f679b2cc-4b13-413a-bef9-0ca6b6 397b0214f8b495477015f88b3c3d7b 2994    1   60.464000  1.078250 862        TRUE             60.674000      694                 0.868250          336                      14.441545            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 84f25d0b-23d8-4fbd-ac58-a57d72 397b0214f8b495477015f88b3c3d7b 2881    1   60.544250  1.349750 1079       TRUE             60.980500      730                 0.913500          351                      10.576068            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 2563d8ac-4eaa-4db1-b730-9fb83c 397b0214f8b495477015f88b3c3d7b 2580    1   60.139750  1.065750 852        TRUE             60.424750      624                 0.780750          326                      10.828456            0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 411f5895-f6ff-46e3-b92d-f99a3d 397b0214f8b495477015f88b3c3d7b 2742    1   60.923750  0.818250 654        TRUE             61.008750      586                 0.733250          333                      9.699732             0.000000         ...
+PAF25252_pass_397b0214_0.fastq PAF25252_pass_397b0214_0.fast5 629498ca-9ae3-46af-a195-7645b3 397b0214f8b495477015f88b3c3d7b 1718    1   60.640750  1.332500 1066       TRUE             60.992000      785                 0.981250          453                      13.001200            0.000000         ...
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../CLI/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                CLI
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../../../citing/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Citing
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright © 2020 Adrien Leger
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

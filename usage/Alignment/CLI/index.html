@@ -1,0 +1,1752 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="pyBioTools is a collection of python tools to manipulate biological sequences">
+      
+      
+      
+        <meta name="author" content="Adrien Leger">
+      
+      
+        <link rel="canonical" href="https://adrienleger.com/pyBioTools/usage/Alignment/CLI/">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.5">
+    
+    
+      
+        <title>CLI - pyBioTools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.15aa0b43.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.75751829.min.css">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#alignment-cli-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://adrienleger.com/pyBioTools/" title="pyBioTools" class="md-header-nav__button md-logo" aria-label="pyBioTools">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            pyBioTools
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://adrienleger.com/pyBioTools/" title="pyBioTools" class="md-nav__button md-logo" aria-label="pyBioTools">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    pyBioTools
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation/" class="md-nav__link">
+        Installation instructions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      
+      <label class="md-nav__link" for="nav-3">
+        Usage
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" checked>
+      
+      <label class="md-nav__link" for="nav-3-1">
+        Alignment
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Alignment" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-1">
+          <span class="md-nav__icon md-icon"></span>
+          Alignment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CLI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CLI
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#activate-virtual-environment" class="md-nav__link">
+    Activate virtual environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_index" class="md-nav__link">
+    Reads_index
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excluding-reads-from-index" class="md-nav__link">
+    Excluding reads from index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_sample" class="md-nav__link">
+    Reads_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help_1" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    Filter
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help_2" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_fastq" class="md-nav__link">
+    To_fastq
+  </a>
+  
+    <nav class="md-nav" aria-label="To_fastq">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-end-read-usage-from-bam-files" class="md-nav__link">
+    Single end read usage from bam files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paired-end-reads-usage-from-unaligned-cram-files" class="md-nav__link">
+    Paired-end reads usage from unaligned CRAM files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    Split
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage-with-an-output-folder" class="md-nav__link">
+    Basic usage with an output folder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage-with-named-output-files" class="md-nav__link">
+    Basic usage with named output files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" >
+      
+      <label class="md-nav__link" for="nav-3-2">
+        Fastq
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fastq" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-2">
+          <span class="md-nav__icon md-icon"></span>
+          Fastq
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3" >
+      
+      <label class="md-nav__link" for="nav-3-3">
+        Seqsum
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Seqsum" data-md-level="2">
+        <label class="md-nav__title" for="nav-3-3">
+          <span class="md-nav__icon md-icon"></span>
+          Seqsum
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Seqsum/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Seqsum/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../citing/" class="md-nav__link">
+        Citing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        Contributing Guidelines
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../code_of_conduct/" class="md-nav__link">
+        Code of conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../licence/" class="md-nav__link">
+        Licence
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#activate-virtual-environment" class="md-nav__link">
+    Activate virtual environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_index" class="md-nav__link">
+    Reads_index
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excluding-reads-from-index" class="md-nav__link">
+    Excluding reads from index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_sample" class="md-nav__link">
+    Reads_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help_1" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    Filter
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-help_2" class="md-nav__link">
+    Get help
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_fastq" class="md-nav__link">
+    To_fastq
+  </a>
+  
+    <nav class="md-nav" aria-label="To_fastq">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-end-read-usage-from-bam-files" class="md-nav__link">
+    Single end read usage from bam files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paired-end-reads-usage-from-unaligned-cram-files" class="md-nav__link">
+    Paired-end reads usage from unaligned CRAM files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    Split
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage-with-an-output-folder" class="md-nav__link">
+    Basic usage with an output folder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage-with-named-output-files" class="md-nav__link">
+    Basic usage with named output files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/a-slide/pyBioTools/edit/master/docs/usage/Alignment/CLI.ipynb" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="alignment-cli-usage">Alignment CLI Usage</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="activate-virtual-environment">Activate virtual environment</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Using virtualenvwrapper here but can also be done with Conda </span>
+conda activate pyBioTools
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>(pyBioTools) (pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="reads_index">Reads_index</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="get-help">Get help</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Reads_index -h
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>usage: pyBioTools Alignment Reads_index [-h] -i INPUT_FN [-u] [-s] [-p] [-v]
+                                        [-q] [--progress]
+
+Index reads found in a coordinated sorted bam file by read_id. The created
+index file can be used to randon access the alignment file per read_id
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FN, --input_fn INPUT_FN
+                        Path to the bam file to index (required) [str]
+  -u, --skip_unmapped   Filter out unmapped reads (default: False) [None]
+  -s, --skip_secondary  Filter out secondary alignment (default: False) [None]
+  -p, --skip_supplementary
+                        Filter out supplementary alignment (default: False)
+                        [None]
+  -v, --verbose         Increase verbosity (default: False)
+  -q, --quiet           Reduce verbosity (default: False)
+  --progress            Display a progress bar
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Reads_index -i ./data/sample_1.bam
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_index ##</span>
+<span class="ansi-green-fg">    Checking Bam file</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      total: 13,684</span>
+<span class="ansi-green-fg">      primary: 10,584</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="excluding-reads-from-index">Excluding reads from index</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Reads_index -i ./data/sample_1.bam --verbose --skip_secondary --skip_unmapped
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_index ##</span>
+<span class="ansi-green-fg">    Checking Bam file</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      total: 10,772</span>
+<span class="ansi-green-fg">      primary: 10,584</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      total: 2,912</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="reads_sample">Reads_sample</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="get-help_1">Get help</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Reads_sample -h
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>usage: pyBioTools Alignment Reads_sample [-h] -i INPUT_FN [-o OUTPUT_FOLDER]
+                                         [-p OUTPUT_PREFIX] [-r N_READS]
+                                         [-s N_SAMPLES]
+                                         [--rand_seed RAND_SEED] [-v] [-q]
+                                         [--progress]
+
+Randomly sample `n_reads` reads from a bam file and write downsampled files in
+`n_samples` bam files. If the input bam file is not indexed by read_id
+`index_reads` is automatically called.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FN, --input_fn INPUT_FN
+                        Path to the indexed bam file (required) [str]
+  -o OUTPUT_FOLDER, --output_folder OUTPUT_FOLDER
+                        Path to a folder where to write sample files (default:
+                        ./) [str]
+  -p OUTPUT_PREFIX, --output_prefix OUTPUT_PREFIX
+                        Path to a folder where to write sample files (default:
+                        out) [str]
+  -r N_READS, --n_reads N_READS
+                        Number of randomly selected reads in each sample
+                        (default: 1000) [int]
+  -s N_SAMPLES, --n_samples N_SAMPLES
+                        Number of samples to generate files for (default: 1)
+                        [int]
+  --rand_seed RAND_SEED
+                        Seed to use for the pseudo randon generator. For non
+                        deterministic behaviour set to 0 (default: 42) [int]
+  -v, --verbose         Increase verbosity (default: False)
+  -q, --quiet           Reduce verbosity (default: False)
+  --progress            Display a progress bar
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage_1">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Reads_sample -i ./data/sample_1.bam -o ./output/sample_reads -p 1K -r <span class="m">1000</span> -s <span class="m">3</span> --progress --verbose
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_sample ##</span>
+<span class="ansi-green-fg">    Checking Bam and index file</span>
+<span class="ansi-green-fg">    Load index</span>
+    Index: 10772it [00:00, 528519.79it/s]
+<span class="ansi-green-fg">    Write sample reads</span>
+    Sample 1: 100%|██████████████████████| 1000/1000 [00:00&lt;00:00, 1225.20 Reads/s]
+<span class="ansi-green-fg">    Indexing output bam file</span>
+    Sample 2: 100%|██████████████████████| 1000/1000 [00:00&lt;00:00, 1255.67 Reads/s]
+<span class="ansi-green-fg">    Indexing output bam file</span>
+    Sample 3: 100%|██████████████████████| 1000/1000 [00:00&lt;00:00, 1225.41 Reads/s]
+<span class="ansi-green-fg">    Indexing output bam file</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="filter">Filter</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="get-help_2">Get help</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Filter -h
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>usage: pyBioTools Alignment Filter [-h] -i INPUT_FN -o OUTPUT_FN [-u] [-s]
+                                   [-p] [-t ORIENTATION] [-r MIN_READ_LEN]
+                                   [-a MIN_ALIGN_LEN] [-m MIN_MAPQ]
+                                   [-f MIN_FREQ_IDENTITY]
+                                   [--select_ref [SELECT_REF [SELECT_REF ...]]]
+                                   [--exclude_ref [EXCLUDE_REF [EXCLUDE_REF ...]]]
+                                   [-v] [-q] [--progress]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FN, --input_fn INPUT_FN
+                        Path to the bam file to filter (required) [str]
+  -o OUTPUT_FN, --output_fn OUTPUT_FN
+                        Path to the write filtered bam file (required) [str]
+  -u, --skip_unmapped   Filter out unmapped reads (default: False) [None]
+  -s, --skip_secondary  Filter out secondary alignment (default: False) [None]
+  -p, --skip_supplementary
+                        Filter out supplementary alignment (default: False)
+                        [None]
+  -t ORIENTATION, --orientation ORIENTATION
+                        Orientation of alignment on reference genome {&#34;+&#34;,&#34;-&#34;
+                        ,&#34;.&#34;} (default: .) [str]
+  -r MIN_READ_LEN, --min_read_len MIN_READ_LEN
+                        Minimal query read length (basecalled length)
+                        (default: 0) [int]
+  -a MIN_ALIGN_LEN, --min_align_len MIN_ALIGN_LEN
+                        Minimal query alignment length on reference (default:
+                        0) [int]
+  -m MIN_MAPQ, --min_mapq MIN_MAPQ
+                        Minimal mapping quality score (mapq) (default: 0)
+                        [int]
+  -f MIN_FREQ_IDENTITY, --min_freq_identity MIN_FREQ_IDENTITY
+                        Minimal frequency of alignment identity [0 to 1]
+                        (default: 0) [float]
+  --select_ref [SELECT_REF [SELECT_REF ...]]
+                        List of references on which the reads have to be
+                        mapped. (default: None) [str]
+  --exclude_ref [EXCLUDE_REF [EXCLUDE_REF ...]]
+                        List of references on which the reads should not be
+                        mapped. (default: None) [str]
+  -v, --verbose         Increase verbosity (default: False)
+  -q, --quiet           Reduce verbosity (default: False)
+  --progress            Display a progress bar
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage_2">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Filter <span class="se">\</span>
+    -i <span class="s2">&quot;./data/sample_1.bam&quot;</span> <span class="se">\</span>
+    -o <span class="s2">&quot;./output/sample_1_filter.bam&quot;</span> <span class="se">\</span>
+    --skip_unmapped <span class="se">\</span>
+    --skip_supplementary <span class="se">\</span>
+    --skip_secondary <span class="se">\</span>
+    --min_read_len <span class="m">300</span> <span class="se">\</span>
+    --min_align_len <span class="m">300</span> <span class="se">\</span>
+    --orientation <span class="s2">&quot;+&quot;</span> <span class="se">\</span>
+    --min_mapq <span class="m">10</span> <span class="se">\</span>
+    --min_freq_identity <span class="m">0</span>.8 <span class="se">\</span>
+    --verbose
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Filter ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Indexing output bam file</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      total: 9,262</span>
+<span class="ansi-green-fg">      wrong_orientation: 5,291</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      low_identity: 510</span>
+<span class="ansi-green-fg">      low_mapping_quality: 283</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+<span class="ansi-green-fg">      short_alignment: 67</span>
+<span class="ansi-green-fg">      short_read: 11</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      primary: 4,422</span>
+<span class="ansi-green-fg">      total: 4,422</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="to_fastq">To_fastq</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment To_fastq -h
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>usage: pyBioTools Alignment To_fastq [-h] -i [INPUT_FN [INPUT_FN ...]] -1
+                                     OUTPUT_R1_FN [-2 OUTPUT_R2_FN] [-s] [-v]
+                                     [-q] [--progress]
+
+Dump reads from an alignment file or set of alignment file(s) to a fastq or
+pair of fastq file(s). Only the primary alignment are kept and paired_end
+reads are assumed to be interleaved. Compatible with unmapped or unaligned
+alignment files as well as files without header.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i [INPUT_FN [INPUT_FN ...]], --input_fn [INPUT_FN [INPUT_FN ...]]
+                        Path (or list of paths) to input BAM/CRAM/SAM file(s)
+                        (required) [str]
+  -1 OUTPUT_R1_FN, --output_r1_fn OUTPUT_R1_FN
+                        Path to an output fastq file (for Read1 in paired_end
+                        mode of output_r2_fn is provided). Automatically
+                        gzipped if the .gz extension is found (required) [str]
+  -2 OUTPUT_R2_FN, --output_r2_fn OUTPUT_R2_FN
+                        Optional Path to an output fastq file. Automatically
+                        gzipped if the .gz extension is found (default: None)
+                        [str]
+  -s, --ignore_paired_end
+                        Ignore paired_end information and output everything in
+                        a single file. (default: False) [None]
+  -v, --verbose         Increase verbosity (default: False)
+  -q, --quiet           Reduce verbosity (default: False)
+  --progress            Display a progress bar
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="single-end-read-usage-from-bam-files">Single end read usage from bam files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment To_fastq <span class="se">\</span>
+    -i ./data/sample_1.bam ./data/sample_2.bam<span class="se">\</span>
+    -1 ./output/sample_1-2_SE_from_bam.fastq.gz <span class="se">\</span>
+    --verbose <span class="se">\</span>
+    --progress
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment To_fastq ##</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_SE_from_bam.fastq.gz in writing mode</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_1.bam</span>
+    Reading: 12000 Reads [00:15, 753.11 Reads/s] 
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_1.bam</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_2.bam</span>
+    Reading: 12000 Reads [00:18, 664.44 Reads/s] 
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_2.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_SE_from_bam.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="paired-end-reads-usage-from-unaligned-cram-files">Paired-end reads usage from unaligned CRAM files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment To_fastq <span class="se">\</span>
+    -i ./data/sample_1_20k.cram ./data/sample_2_20k.cram <span class="se">\</span>
+    -1 ./output/sample_1-2_PE_from_CRAM_1.fastq.gz <span class="se">\</span>
+    -2 ./output/sample_1-2_PE_from_CRAM_2.fastq.gz <span class="se">\</span>
+    --verbose <span class="se">\</span>
+    --progress
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment To_fastq ##</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_PE_from_CRAM_1.fastq.gz in writing mode</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_PE_from_CRAM_2.fastq.gz in writing mode</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_1_20k.cram</span>
+[E::cram_index_load] Could not retrieve index file for &#39;./data/sample_1_20k.cram&#39;
+    Reading: 12000 Reads [00:03, 3594.10 Reads/s]
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_1_20k.cram</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_2_20k.cram</span>
+[E::cram_index_load] Could not retrieve index file for &#39;./data/sample_2_20k.cram&#39;
+    Reading: 12000 Reads [00:03, 3628.22 Reads/s]
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_2_20k.cram</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_PE_from_CRAM_1.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_PE_from_CRAM_2.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="split">Split</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Split -h
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>usage: pyBioTools Alignment Split [-h] -i INPUT_FN [-o OUTPUT_DIR]
+                                  [-n N_FILES]
+                                  [-l [OUTPUT_FN_LIST [OUTPUT_FN_LIST ...]]]
+                                  [-x] [-v] [-q] [--progress]
+
+Split reads in a bam file in N files. The input bam file has to be sorted by
+coordinates and indexed. The last file can contain a few extra reads.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FN, --input_fn INPUT_FN
+                        Path to the bam file to filter (required) [str]
+  -o OUTPUT_DIR, --output_dir OUTPUT_DIR
+                        Path to the directory where to write split bam files.
+                        Files generated have the same basename as the source
+                        file and are suffixed with numbers starting from 0
+                        (default: None) [str]
+  -n N_FILES, --n_files N_FILES
+                        Number of file to split the original file into
+                        (default: 10) [int]
+  -l [OUTPUT_FN_LIST [OUTPUT_FN_LIST ...]], --output_fn_list [OUTPUT_FN_LIST [OUTPUT_FN_LIST ...]]
+                        As an alternative to output_dir and n_files one can
+                        instead give a list of output files. Reads will be
+                        automatically split between the files in the same
+                        order as given (default: None) [str]
+  -x, --index           Index output BAM files (default: False) [None]
+  -v, --verbose         Increase verbosity (default: False)
+  -q, --quiet           Reduce verbosity (default: False)
+  --progress            Display a progress bar
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage-with-an-output-folder">Basic usage with an output folder</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Split <span class="se">\</span>
+    -i <span class="s2">&quot;./data/sample_1.bam&quot;</span> <span class="se">\</span>
+    -o <span class="s2">&quot;./output/split_bam&quot;</span> <span class="se">\</span>
+    -n <span class="m">5</span> <span class="se">\</span>
+    --verbose
+
+ll <span class="s2">&quot;./output/split_bam&quot;</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Split ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: List of output files to generate:</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_0.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_1.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_2.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_3.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_4.bam</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Counting reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_0.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_0.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 2,736</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 2,736</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 2,736</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 2,736</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 2,740</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads from index: 13,684</span>
+<span class="ansi-green-fg">     Reads writen: 13,684</span>
+<span class="ansi-green-fg">     Reads per file: 2,736</span>
+(pyBioTools) (pyBioTools) total 38M
+-rw-rw-r-- 1 aleg aleg 8.4M Jan 19 14:57 sample_1_0.bam
+-rw-rw-r-- 1 aleg aleg 8.4M Jan 19 14:57 sample_1_1.bam
+-rw-rw-r-- 1 aleg aleg 8.5M Jan 19 14:57 sample_1_2.bam
+-rw-rw-r-- 1 aleg aleg 8.5M Jan 19 14:57 sample_1_3.bam
+-rw-rw-r-- 1 aleg aleg 3.5M Jan 19 14:57 sample_1_4.bam
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage-with-named-output-files">Basic usage with named output files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>pyBioTools Alignment Split <span class="se">\</span>
+    -i <span class="s2">&quot;./data/sample_1.bam&quot;</span> <span class="se">\</span>
+    -l <span class="s2">&quot;./output/split_bam_2/f1.bam&quot;</span> <span class="s2">&quot;./output/split_bam_2/f2.bam&quot;</span> <span class="s2">&quot;./output/split_bam_2/f3.bam&quot;</span> <span class="s2">&quot;./output/split_bam_2/f4.bam&quot;</span> <span class="se">\</span>
+    --verbose <span class="se">\</span>
+    --index
+
+ll <span class="s2">&quot;./output/split_bam_2&quot;</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Split ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: List of output files to generate:</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f1.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f2.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f3.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f4.bam</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Counting reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads from index: 13,684</span>
+<span class="ansi-green-fg">     Reads writen: 13,684</span>
+<span class="ansi-green-fg">     Reads per file: 3,421</span>
+(pyBioTools) (pyBioTools) total 38M
+-rw-rw-r-- 1 aleg aleg  11M Jan 19 14:57 f1.bam
+-rw-rw-r-- 1 aleg aleg 6.2K Jan 19 14:57 f1.bam.bai
+-rw-rw-r-- 1 aleg aleg  12M Jan 19 14:57 f2.bam
+-rw-rw-r-- 1 aleg aleg 7.4K Jan 19 14:57 f2.bam.bai
+-rw-rw-r-- 1 aleg aleg 9.4M Jan 19 14:57 f3.bam
+-rw-rw-r-- 1 aleg aleg 5.0K Jan 19 14:57 f3.bam.bai
+-rw-rw-r-- 1 aleg aleg 5.6M Jan 19 14:57 f4.bam
+-rw-rw-r-- 1 aleg aleg 2.5K Jan 19 14:57 f4.bam.bai
+(pyBioTools) </code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_text output_error">
+<pre></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../../installation/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Installation instructions
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../API/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                API
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright © 2020 Adrien Leger
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
