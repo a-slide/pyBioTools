@@ -1,4 +1,4 @@
-{% set version = "0.2.4.post1" %}
+{% set version = "0.2.4.post1.dev1" %}
 {% set name = "pyBioTools" %}
 
 package:
@@ -25,6 +25,7 @@ requirements:
     - numpy>=1.19.4
     - pysam>=0.16.0
     - pandas>=1.1.4
+    - colorlog>=4.1.0
 
 test:
   imports:

@@ -23,13 +23,7 @@ conda activate pyBioTools
 
 ## Dependencies
 
-Nanocompore relies on a the following robustly maintained third party python libraries:
-
-* tqdm 4.32.1
-* numpy 1.16.4
-* pysam 0.15.2
-* pandas 0.24.2
-
+Nanocompore only relies robustly maintained third party python libraries listed in the setup.py file
 The correct versions of packages are installed together with the software when using pip or conda
 
 ## Option 1: Installation with pip from pypi
