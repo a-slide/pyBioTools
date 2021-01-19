@@ -54,7 +54,6 @@ deploy:
   # Production version deployment
   - provider: pages
     skip_cleanup: true
-    target_branch: gh-pages-test
     github_token: "$GH_TOKEN"
     local_dir: site
     on:
