@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 __name__ = "pyBioTools"
-__version__ = "0.2.5.post3"
+__version__ = "0.2.6"
 __description__ = "pyBioTools is a collection of python tools to manipulate biological sequences"
 __url__ = "https://github.com/a-slide/pyBioTools"
 __licence__ = "GPLv3"

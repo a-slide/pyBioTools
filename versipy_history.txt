@@ -16,3 +16,4 @@
 2021-01-19 15:58:54.576185	0.2.5.post1	Fix doc deployment
 2021-01-19 16:07:30.397587	0.2.5.post2	Improve documentation deployment
 2021-01-19 16:10:56.050105	0.2.5.post3	Improve documentation deployment again
+2021-01-20 15:44:09.598514	0.2.6	Add function References_sample in the Alignment
