@@ -45,7 +45,6 @@ def main ():
     arg_from_docstr(sp_a_ir, f, "skip_secondary", "s")
     arg_from_docstr(sp_a_ir, f, "skip_supplementary", "p")
 
-    # Alignment Reads_sample
     f = Alignment.Reads_sample
     sp_a_sr = sp_a_subparsers.add_parser("Reads_sample", description=doc_func(f))
     sp_a_sr.set_defaults(func=f)
@@ -56,7 +55,17 @@ def main ():
     arg_from_docstr(sp_a_sr, f, "n_samples" , "s")
     arg_from_docstr(sp_a_sr, f, "rand_seed")
 
-    # Alignment Filter
+    f = Alignment.References_sample
+    sp_a_rs = sp_a_subparsers.add_parser("References_sample", description=doc_func(f))
+    sp_a_rs.set_defaults(func=f)
+    arg_from_docstr(sp_a_rs, f, "input_fn", "i")
+    arg_from_docstr(sp_a_rs, f, "output_fn", "o")
+    arg_from_docstr(sp_a_rs, f, "selected_reads_fn", "s")
+    arg_from_docstr(sp_a_rs, f, "frac_reads", "f")
+    arg_from_docstr(sp_a_rs, f, "min_reads_ref", "r")
+    arg_from_docstr(sp_a_rs, f, "sorting_threads", "t")
+    arg_from_docstr(sp_a_rs, f, "rand_seed")
+
     f = Alignment.Filter
     sp_a_fr = sp_a_subparsers.add_parser("Filter", description=doc_func(f))
     sp_a_fr.set_defaults(func=f)
@@ -73,7 +82,6 @@ def main ():
     arg_from_docstr(sp_a_fr, f, "select_ref")
     arg_from_docstr(sp_a_fr, f, "exclude_ref")
 
-    # Alignment Reads_sample
     f = Alignment.To_fastq
     sp_a_tf = sp_a_subparsers.add_parser("To_fastq", description=doc_func(f))
     sp_a_tf.set_defaults(func=f)
@@ -82,7 +90,6 @@ def main ():
     arg_from_docstr(sp_a_tf, f, "output_r2_fn" , "2")
     arg_from_docstr(sp_a_tf, f, "ignore_paired_end" , "s")
 
-    # Alignment Reads_sample
     f = Alignment.Split
     sp_a_st = sp_a_subparsers.add_parser("Split", description=doc_func(f))
     sp_a_st.set_defaults(func=f)
@@ -108,7 +115,6 @@ def main ():
     arg_from_docstr(sp_fq_fr, f, "remove_duplicates" , "r")
     arg_from_docstr(sp_fq_fr, f, "qual_offset" , "f")
 
-
     #~~~~~Seqsum suparser~~~~~#
     sp_ss = subparsers.add_parser("Seqsum", description="Sequencing summary format related functions")
     sp_ss_subparsers = sp_ss.add_subparsers (description="Seqsum implements the following subcommands", dest="fastq_subcommands")
@@ -123,11 +129,11 @@ def main ():
     arg_from_docstr(sp_ss_mg, f, "old_filename_synthax")
 
     # Add common group parsers
-    for sp in [sp_a_ir, sp_a_sr, sp_a_fr, sp_a_tf, sp_fq_fr, sp_a_st, sp_ss_mg]:
+    for sp in [sp_a_ir, sp_a_sr, sp_a_rs, sp_a_fr, sp_a_tf, sp_fq_fr, sp_a_st, sp_ss_mg]:
         sp.add_argument("-v", "--verbose", action="store_true", default=False, help="Increase verbosity (default: %(default)s)")
         sp.add_argument("-q", "--quiet", action="store_true", default=False, help="Reduce verbosity (default: %(default)s)")
         sp.add_argument("--progress", action="store_true", default=False, help="Display a progress bar")
-
+    
     # Parse args and call subfunction
     args = parser.parse_args()
     args.func(**vars(args))

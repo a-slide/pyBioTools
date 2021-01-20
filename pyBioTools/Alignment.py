@@ -4,6 +4,8 @@
 from collections import *
 import gzip
 import random
+import math
+import tempfile
 
 # Third party library imports
 import pysam
@@ -154,6 +156,145 @@ def Reads_sample (
 
             logger.info("Indexing output bam file")
             pysam.index(output_fn)
+
+def References_sample (
+    input_fn:[str],
+    output_fn:str="out.bam",
+    selected_reads_fn:str="select_ref.txt",
+    frac_reads:float=0.5,
+    min_reads_ref:int=30,
+    rand_seed:int=42,
+    sorting_threads:int=4,
+    verbose:bool=False,
+    quiet:bool=False,
+    progress:bool=False,
+    **kwargs):
+    """
+    Randomly sample reads per references according to a fraction od the reads mapped to this reference for a one or
+    several files and write selected reads in a new bam file
+    * input_fn
+        Bam file path or directory containing bam files or list of files, or regex or list of regex.
+        It is quite flexible. All files need to be sorted and aligned to the same reference file.
+    * output_fn
+        Path to the output bam file (sorted and indexed)
+    * selected_reads_fn
+        Path to the output text file containing all the read id selected
+    * frac_reads
+        Fraction of reads mapped to sample for each reference
+    * min_reads_ref
+        Minimal read coverage per file and reference before sampling
+    * rand_seed
+        Seed to use for the pseudo randon generator. For non deterministic behaviour set to None
+    * sorting_threads
+        Number of threads to use for bam file sorting
+    """
+
+    # Define logger
+    logger = get_logger (name="Alignment_Ref_sample", verbose=verbose, quiet=quiet)
+    logger.warning("Running Alignment Ref_sample")
+
+    # Set random seed
+    random.seed(rand_seed)
+
+    # Create the output folders if they do not exist yet
+    for fn in [output_fn, selected_reads_fn]:
+        mkdir(os.path.dirname(fn), exist_ok=True)
+
+    # Load index file
+    logger.warning("Index files")
+
+    header = None
+    d = OrderedDict()
+    c =  Counter()
+    for fn in super_iglob(input_fn):
+        logger.info("Indexing alignment file {}".format(fn))
+
+        # Check Bam file compliance
+        _check_bam (fn)
+
+        try:
+            with pysam.AlignmentFile(fn) as bam, tqdm(desc="\tReading ", unit=" Reads", disable=not progress) as pbar:
+                # Collect header and verify that all files where aligned with the same reference and parameters
+                if header is None:
+                    header = bam.header
+                elif bam.header.references != header.references:
+                    raise pyBioToolsError("Bam Header from file {fn} is not consistent with previous files")
+
+                # Parse reads and save index
+                while True:
+                    loc = bam.tell()
+                    read = next(bam)
+                    pbar.update()
+
+                    if read.is_unmapped:
+                        c["unmapped reads"]+=1
+                    elif read.is_secondary:
+                        c["secondary reads"]+=1
+                    elif read.is_supplementary:
+                          c["supplementary reads"]+=1
+                    else:
+                        c["primary reads"]+=1
+                        ref_id = read.reference_name
+                        if not ref_id in d:
+                            d[ref_id] = OrderedDict()
+                        if not fn in d[ref_id]:
+                            d[ref_id][fn] = []
+                        d[ref_id][fn].append(loc)
+
+        except (StopIteration, KeyboardInterrupt):
+            pass
+
+    logger.info("Raw read counts summary")
+    log_dict(c, logger.info)
+
+    # Select reads per ref
+    logger.warning("Randomly pick reads per references")
+    select_loc_d = defaultdict(list)
+    c = Counter()
+    for ref_id, fn_d in d.items():
+
+        valid_cov = True
+        if min_reads_ref is not None:
+            for fn, loc_list in fn_d.items():
+                n_reads = len(loc_list)
+                if n_reads < min_reads_ref:
+                    valid_cov = False
+                    break
+
+        if valid_cov is True:
+            c["valid references"]+=1
+            for fn, loc_list in fn_d.items():
+                n_reads = len(loc_list)
+                c["valid reads"]+=n_reads
+                n_samples = math.ceil(len(loc_list)*frac_reads)
+                sample_loc_list = random.sample(loc_list, n_samples)
+                select_loc_d[fn].extend(sample_loc_list)
+                c["valid sampled reads"]+=n_samples
+
+        else:
+            c["low coverage references skipped"]+=1
+
+    logger.warning("Sample reads and write to output file")
+    with tempfile.NamedTemporaryFile() as temp_bam:
+        with pysam.AlignmentFile(temp_bam.name, "wb", header=header) as bam_out, open(selected_reads_fn, "w") as selected_reads_fp:
+            for fn, loc_list in select_loc_d.items():
+                loc_list = sorted(loc_list)
+                logger.info("Writing selected reads for bam file {}".format(fn))
+                with pysam.AlignmentFile(fn) as bam_in:
+                    for loc in tqdm(loc_list, desc="\tWriting ", unit=" Reads", disable=not progress):
+                        bam_in.seek(loc)
+                        read = next(bam_in)
+                        bam_out.write(read)
+                        selected_reads_fp.write("{}\n".format(read.query_name))
+
+        logger.info("Sort BAM File")
+        pysam.sort(temp_bam.name, "-o", output_fn, "-@", str(sorting_threads))
+
+    logger.info("Index sorted BAM File")
+    pysam.index(output_fn)
+
+    logger.info("Selected read counts summary")
+    log_dict(c, logger.info)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Filter~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def Filter (

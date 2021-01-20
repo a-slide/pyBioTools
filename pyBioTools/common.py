@@ -50,10 +50,11 @@ def super_iglob (pathname, recursive=False, regex_list=[]):
 
 def mkdir (fn, exist_ok=False):
     """ Create directory recursivelly. Raise IO error if path exist or if error at creation """
-    try:
-        os.makedirs (fn, exist_ok=exist_ok)
-    except:
-        raise pyBioToolsError ("Error creating output folder `{}`".format(fn))
+    if fn not in [ "", "..", "."]:
+        try:
+            os.makedirs (fn, exist_ok=exist_ok)
+        except:
+            raise pyBioToolsError ("Error creating output folder `{}`".format(fn))
 
 def mkbasedir (fn, exist_ok=False):
     """ Create directory for a given file recursivelly. Raise IO error if path exist or if error at creation """
