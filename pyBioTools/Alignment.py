@@ -31,11 +31,11 @@ def Reads_index (
     * input_fn
         Path to the bam file to index
     * skip_unmapped
-        Filter out unmapped reads
+        Do not include unmapped reads in index
     * skip_secondary
-        Filter out secondary alignment
+        Do not include secondary alignment in index
     * skip_supplementary
-        Filter out supplementary alignment
+        Do not include supplementary alignment in index
     """
     # Define logger
     logger = get_logger (name="Alignment_Reads_index", verbose=verbose, quiet=quiet)
@@ -51,26 +51,27 @@ def Reads_index (
     idx_fn = input_fn+".idx.gz"
     try:
         with pysam.AlignmentFile(input_fn) as bam, gzip.open(idx_fn, "wt") as idx, tqdm(unit=" Reads", disable=not progress) as pbar:
+            idx.write("read_id\tref_id\tpointer\tindex\n")
             try:
+                i=0
                 while True:
+
                     # Save pointer and read_id
                     p = bam.tell()
                     read = next(bam)
                     pbar.update()
 
-                    valid_read, read_status = _eval_read(
-                        read=read,
-                        skip_unmapped = skip_unmapped,
-                        skip_secondary = skip_secondary,
-                        skip_supplementary = skip_supplementary)
+                    valid_read, read_status = _eval_read(read=read, skip_unmapped = skip_unmapped, skip_secondary = skip_secondary, skip_supplementary = skip_supplementary)
 
                     if valid_read:
                         c["Reads retained"][read_status]+=1
                         c["Reads retained"]["total"]+=1
-                        idx.write("{}\t{}\n".format(read.query_name, p))
+                        idx.write("{}\t{}\t{}\t{}\n".format(read.query_name, read.reference_name, p, i))
                     else:
                         c["Reads discarded"][read_status]+=1
                         c["Reads discarded"]["total"]+=1
+
+                    i+=1
 
             except (StopIteration, KeyboardInterrupt):
                 pass
@@ -119,7 +120,7 @@ def Reads_sample (
     idx_fn = input_fn+".idx.gz"
     if not file_readable(idx_fn):
         logger.info("Read index not found. Creating one")
-        index_reads (input_fn, **kwargs)
+        Reads_index (input_fn, **kwargs)
 
     # Create the output folder if it does exist yet
     mkdir(output_folder, exist_ok=True)
@@ -128,13 +129,13 @@ def Reads_sample (
     logger.info("Load index")
     l = []
 
-    with gzip.open(idx_fn, "rt") as idx:
-        for line in tqdm (idx, desc="\tIndex", disable=not progress):
-            l.append (int(line.rstrip().split("\t")[1]))
+    with gzip.open(idx_fn, "rt") as idx_fp:
+        _= next(idx_fp)
+        for line in tqdm (idx_fp, desc="\tIndex", disable=not progress):
+            l.append (int(line.rstrip().split("\t")[2]))
 
     # Get random reads
     logger.info("Write sample reads")
-
     with pysam.AlignmentFile(input_fn) as bam_in:
 
         for sample_num in range(1, n_samples+1):
@@ -170,7 +171,7 @@ def References_sample (
     progress:bool=False,
     **kwargs):
     """
-    Randomly sample reads per references according to a fraction od the reads mapped to this reference for a one or
+    Randomly sample reads per references according to a fraction of the reads mapped to this reference for one or
     several files and write selected reads in a new bam file
     * input_fn
         Bam file path or directory containing bam files or list of files, or regex or list of regex.
@@ -300,16 +301,18 @@ def References_sample (
 def Filter (
     input_fn:str,
     output_fn:str,
+    selected_reads_fn:str=None,
     skip_unmapped:bool=False,
     skip_secondary:bool=False,
     skip_supplementary:bool=False,
+    index_reads:bool=False,
     orientation:str=".",
     min_read_len:int=0,
     min_align_len:int=0,
     min_mapq:int=0,
     min_freq_identity:float=0,
-    select_ref:[str]=[],
-    exclude_ref:[str]=[],
+    select_ref_fn:str=None,
+    exclude_ref_fn:str=None,
     verbose:bool=False,
     quiet:bool=False,
     progress:bool=False,
@@ -319,12 +322,16 @@ def Filter (
         Path to the bam file to filter
     * output_fn
         Path to the write filtered bam file
+    * selected_reads_fn
+        Optional file where to write ids of selected reads
     * skip_unmapped
         Filter out unmapped reads
     * skip_secondary
         Filter out secondary alignment
     * skip_supplementary
         Filter out supplementary alignment
+    * index_reads
+        Index bam file with both pysam and pybiotools reads_index
     * orientation
         Orientation of alignment on reference genome {"+","-" ,"."}
     * min_read_len
@@ -335,10 +342,10 @@ def Filter (
         Minimal mapping quality score (mapq)
     * min_freq_identity
         Minimal frequency of alignment identity [0 to 1]
-    * select_ref
-        List of references on which the reads have to be mapped.
-    * exclude_ref
-        List of references on which the reads should not be mapped.
+    * select_ref_fn
+        File containing a list of references on which the reads have to be mapped.
+    * exclude_ref_fn
+        File containing a list of references on which the reads should not be mapped.
     """
     # Define logger
     logger = get_logger (name="Alignment_Filter", verbose=verbose, quiet=quiet)
@@ -348,13 +355,36 @@ def Filter (
     logger.info("Checking input bam file")
     _check_bam (input_fn)
 
-    # Get random reads
+    # Import selected and excuded references list
+    select_ref=[]
+    if select_ref_fn:
+        logger.info("Loading selected reference file ids")
+        with open(select_ref_fn, "r") as fp:
+            for l in fp:
+                select_ref.append(l.strip())
+            logger.debug("Found {} references to select".format(len(select_ref)))
+    exclude_ref=[]
+    if exclude_ref_fn:
+        logger.info("Loading excluded reference file ids")
+        with open(exclude_ref_fn, "r") as fp:
+            for l in fp:
+                exclude_ref.append(l.strip())
+            logger.debug("Found {} references to exclude".format(len(exclude_ref)))
+
+    # Make output dir if needed
+    logger.debug("Make output directories")
+    mkdir(os.path.dirname(output_fn), exist_ok=True)
+    if selected_reads_fn:
+        mkdir(os.path.dirname(selected_reads_fn), exist_ok=True)
+
+    # Parse reads
     logger.info("Parsing reads")
     c = defaultdict (Counter)
+    selected_read_ids = set()
     try:
         with pysam.AlignmentFile(input_fn) as bam_in:
             with pysam.AlignmentFile(output_fn, "wb", header=bam_in.header) as bam_out:
-                for read in tqdm(bam_in, desc="\t", unit=" Reads", disable=not progress):
+                for read in tqdm(bam_in, desc="\tReading ", unit=" Reads", disable=not progress):
                     valid_read, read_status = _eval_read(
                         read = read,
                         skip_unmapped = skip_unmapped,
@@ -372,13 +402,23 @@ def Filter (
                         c["Reads retained"][read_status]+=1
                         c["Reads retained"]["total"]+=1
                         bam_out.write(read)
+                        selected_read_ids.add(read.query_name)
                     else:
                         c["Reads discarded"][read_status]+=1
                         c["Reads discarded"]["total"]+=1
 
-        # Check Bam readability and index
-        logger.info("Indexing output bam file")
-        pysam.index(output_fn)
+        if index_reads:
+            logger.info("Indexing output bam file with pysam")
+            pysam.index(output_fn)
+
+            logger.info("Indexing output bam file with pyBiotools")
+            Reads_index(output_fn)
+
+        if selected_reads_fn:
+            logger.info("Write selected read_id list")
+            with open (selected_reads_fn, "w") as fp:
+                for read_id in sorted(selected_read_ids):
+                    fp.write("{}\n".format(read_id))
 
     # Print read count summary
     finally:

@@ -71,16 +71,18 @@ def main ():
     sp_a_fr.set_defaults(func=f)
     arg_from_docstr(sp_a_fr, f, "input_fn", "i")
     arg_from_docstr(sp_a_fr, f, "output_fn", "o")
+    arg_from_docstr(sp_a_fr, f, "selected_reads_fn", "l")
     arg_from_docstr(sp_a_fr, f, "skip_unmapped", "u")
     arg_from_docstr(sp_a_fr, f, "skip_secondary", "s")
     arg_from_docstr(sp_a_fr, f, "skip_supplementary", "p")
+    arg_from_docstr(sp_a_fr, f, "index_reads", "x")
     arg_from_docstr(sp_a_fr, f, "orientation", "t")
     arg_from_docstr(sp_a_fr, f, "min_read_len", "r")
     arg_from_docstr(sp_a_fr, f, "min_align_len", "a")
     arg_from_docstr(sp_a_fr, f, "min_mapq", "m")
     arg_from_docstr(sp_a_fr, f, "min_freq_identity", "f")
-    arg_from_docstr(sp_a_fr, f, "select_ref")
-    arg_from_docstr(sp_a_fr, f, "exclude_ref")
+    arg_from_docstr(sp_a_fr, f, "select_ref_fn")
+    arg_from_docstr(sp_a_fr, f, "exclude_ref_fn")
 
     f = Alignment.To_fastq
     sp_a_tf = sp_a_subparsers.add_parser("To_fastq", description=doc_func(f))
@@ -133,7 +135,7 @@ def main ():
         sp.add_argument("-v", "--verbose", action="store_true", default=False, help="Increase verbosity (default: %(default)s)")
         sp.add_argument("-q", "--quiet", action="store_true", default=False, help="Reduce verbosity (default: %(default)s)")
         sp.add_argument("--progress", action="store_true", default=False, help="Display a progress bar")
-    
+
     # Parse args and call subfunction
     args = parser.parse_args()
     args.func(**vars(args))
