@@ -41,7 +41,7 @@ def Merge (
     logger.info("Parsing reads")
     c = Counter()
     main_header = None
-    read_id_list = []
+    read_id_list = set()
     duplicated_ids=0
     try:
         # Define output mode
@@ -78,7 +78,7 @@ def Merge (
                         if read_id in read_id_list:
                             duplicated_ids+=1
                         else:
-                            read_id_list.append(read_id)
+                            read_id_list.add(read_id)
                             fp_out.write(line)
                             c["Valid lines"]+=1
 
