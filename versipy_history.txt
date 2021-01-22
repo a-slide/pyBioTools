@@ -18,3 +18,4 @@
 2021-01-19 16:10:56.050105	0.2.5.post3	Improve documentation deployment again
 2021-01-20 15:44:09.598514	0.2.6	Add function References_sample in the Alignment
 2021-01-21 15:38:30.193208	0.2.7	Improve Alignment Index and Filter functions
+2021-01-22 12:03:11.343404	0.2.8	Improve Seqsum merge function
