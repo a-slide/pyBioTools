@@ -20,3 +20,4 @@
 2021-01-21 15:38:30.193208	0.2.7	Improve Alignment Index and Filter functions
 2021-01-22 12:03:11.343404	0.2.8	Improve Seqsum merge function
 2021-01-22 14:27:41.767087	0.2.9	preformance update
+2021-02-08 11:44:07.264663	0.2.10	Add API annotation parser class
