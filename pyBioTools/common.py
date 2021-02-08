@@ -15,6 +15,13 @@ import pysam
 import colorlog
 
 #~~~~~~~~~~~~~~FUNCTIONS~~~~~~~~~~~~~~#
+def read_in_chunks(fp, chunk_size=1024):
+    """Iterator function to read file in chunks"""
+    while True:
+        data = fp.read(chunk_size)
+        if not data:
+            break
+        yield data
 
 def file_readable (fn, **kwargs):
     """Check if the file is readable"""
