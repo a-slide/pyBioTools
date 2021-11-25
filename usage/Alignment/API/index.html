@@ -1,0 +1,2040 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="pyBioTools is a collection of python tools to manipulate biological sequences">
+      
+      
+      
+        <meta name="author" content="Adrien Leger">
+      
+      
+        <link rel="canonical" href="https://adrienleger.com/pyBioTools/usage/Alignment/API/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>API - pyBioTools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#alignment-api-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="pyBioTools" class="md-header__button md-logo" aria-label="pyBioTools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pyBioTools
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="pyBioTools" class="md-nav__button md-logo" aria-label="pyBioTools" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    pyBioTools
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/a-slide/pyBioTools/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    a-slide/pyBioTools
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../installation/" class="md-nav__link">
+        Installation instructions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Alignment
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Alignment" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Alignment
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-package" class="md-nav__link">
+    Import package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_index" class="md-nav__link">
+    Reads_index
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excluding-reads-from-index" class="md-nav__link">
+    Excluding reads from index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_sample" class="md-nav__link">
+    Reads_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references_sample" class="md-nav__link">
+    References_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="References_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    Filter
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_3" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-criteria-filtering" class="md-nav__link">
+    Multi criteria filtering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-specific-reference" class="md-nav__link">
+    Select specific reference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_fastq" class="md-nav__link">
+    To_fastq
+  </a>
+  
+    <nav class="md-nav" aria-label="To_fastq">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-end-read-usage-from-bam-files" class="md-nav__link">
+    Single end read usage from bam files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paired-end-reads-usage-from-unaligned-cram-files" class="md-nav__link">
+    Paired-end reads usage from unaligned CRAM files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    Split
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage-with-number-of-output-files-to-generate" class="md-nav__link">
+    Usage with number of output files to generate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-with-a-predefined-list-of-output-files" class="md-nav__link">
+    Usage with a predefined list of output files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Fastq
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Fastq" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Fastq
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Fastq/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Seqsum
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Seqsum" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Seqsum
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Seqsum/CLI/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Seqsum/API/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../citing/" class="md-nav__link">
+        Citing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        Contributing Guidelines
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../code_of_conduct/" class="md-nav__link">
+        Code of conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../licence/" class="md-nav__link">
+        Licence
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#import-package" class="md-nav__link">
+    Import package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_index" class="md-nav__link">
+    Reads_index
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excluding-reads-from-index" class="md-nav__link">
+    Excluding reads from index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reads_sample" class="md-nav__link">
+    Reads_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Reads_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references_sample" class="md-nav__link">
+    References_sample
+  </a>
+  
+    <nav class="md-nav" aria-label="References_sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    Filter
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_3" class="md-nav__link">
+    Basic usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-criteria-filtering" class="md-nav__link">
+    Multi criteria filtering
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select-specific-reference" class="md-nav__link">
+    Select specific reference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to_fastq" class="md-nav__link">
+    To_fastq
+  </a>
+  
+    <nav class="md-nav" aria-label="To_fastq">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-end-read-usage-from-bam-files" class="md-nav__link">
+    Single end read usage from bam files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paired-end-reads-usage-from-unaligned-cram-files" class="md-nav__link">
+    Paired-end reads usage from unaligned CRAM files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    Split
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage-with-number-of-output-files-to-generate" class="md-nav__link">
+    Usage with number of output files to generate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage-with-a-predefined-list-of-output-files" class="md-nav__link">
+    Usage with a predefined list of output files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/a-slide/pyBioTools/edit/master/docs/usage/Alignment/API.ipynb" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var requireJsScript = document.createElement('script');
+    requireJsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js';
+
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var jupyterWidgetsScript = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    jupyterWidgetsScript.src = widgetRendererSrc;
+
+    document.body.appendChild(requireJsScript);
+    document.body.appendChild(jupyterWidgetsScript);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="alignment-api-usage">Alignment API Usage</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="import-package">Import package</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyBioTools</span> <span class="kn">import</span> <span class="n">Alignment</span>
+<span class="kn">from</span> <span class="nn">pyBioTools.common</span> <span class="kn">import</span> <span class="n">jhelp</span><span class="p">,</span> <span class="n">head</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="reads_index">Reads_index</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">Reads_index</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>Reads_index</strong> (input_fn, skip_unmapped, skip_secondary, skip_supplementary, verbose, quiet, progress, kwargs)</p>
+<p>Index reads found in a coordinated sorted bam file by read_id. The created index file can be used to randon access the alignment file per read_id</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to the bam file to index</p>
+<ul>
+<li><strong>skip_unmapped</strong> (default: False) [bool]</li>
+</ul>
+<p>Do not include unmapped reads in index</p>
+<ul>
+<li><strong>skip_secondary</strong> (default: False) [bool]</li>
+</ul>
+<p>Do not include secondary alignment in index</p>
+<ul>
+<li><strong>skip_supplementary</strong> (default: False) [bool]</li>
+</ul>
+<p>Do not include supplementary alignment in index</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Reads_index</span><span class="p">(</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="s2">&quot;./data/sample_1.bam.idx.gz&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_index ##</span>
+<span class="ansi-green-fg">    Checking Bam file</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      total: 13,684</span>
+<span class="ansi-green-fg">      primary: 10,584</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>read_id                        ref_id pointer    index 
+4f20c07e-183a-4483-9313-220390 chr-I  31653888   0     
+f5fc15c4-0bd5-4e56-9509-625574 chr-I  31681836   1     
+4c144dc6-705a-4d0c-951f-02fd7f chr-I  31685499   2     
+6449b796-5339-4d61-8cf4-14658f chr-I  1338834944 3     
+f0bea8a5-a7bc-455c-b0e8-abc6ff chr-I  1338869081 4     
+f50af728-e016-4c74-b48f-fe7459 chr-I  1338876255 5     
+3213cb66-ac07-468a-862e-4e5fd1 chr-I  1338878547 6     
+370dbed1-1e84-4b40-87ff-e6468b chr-I  1338879643 7     
+9e21a7d4-1b3e-4967-856e-ca4e99 chr-I  1338889457 8     
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="excluding-reads-from-index">Excluding reads from index</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Reads_index</span><span class="p">(</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skip_secondary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skip_supplementary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skip_unmapped</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">head</span><span class="p">(</span><span class="s2">&quot;./data/sample_1.bam.idx.gz&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_index ##</span>
+<span class="ansi-green-fg">    Checking Bam file</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      primary: 10,584</span>
+<span class="ansi-green-fg">      total: 10,584</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      total: 3,100</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>read_id                        ref_id pointer    index 
+4f20c07e-183a-4483-9313-220390 chr-I  31653888   0     
+f5fc15c4-0bd5-4e56-9509-625574 chr-I  31681836   1     
+4c144dc6-705a-4d0c-951f-02fd7f chr-I  31685499   2     
+6449b796-5339-4d61-8cf4-14658f chr-I  1338834944 3     
+f0bea8a5-a7bc-455c-b0e8-abc6ff chr-I  1338869081 4     
+f50af728-e016-4c74-b48f-fe7459 chr-I  1338876255 5     
+3213cb66-ac07-468a-862e-4e5fd1 chr-I  1338878547 6     
+370dbed1-1e84-4b40-87ff-e6468b chr-I  1338879643 7     
+9e21a7d4-1b3e-4967-856e-ca4e99 chr-I  1338889457 8     
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="reads_sample">Reads_sample</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">Reads_sample</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>Reads_sample</strong> (input_fn, output_folder, output_prefix, n_reads, n_samples, rand_seed, verbose, quiet, progress, kwargs)</p>
+<p>Randomly sample <code>n_reads</code> reads from a bam file and write downsampled files in <code>n_samples</code> bam files. If the input bam file is not indexed by read_id <code>index_reads</code> is automatically called.</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to the indexed bam file</p>
+<ul>
+<li><strong>output_folder</strong> (default: ./) [str]</li>
+</ul>
+<p>Path to a folder where to write sample files</p>
+<ul>
+<li><strong>output_prefix</strong> (default: out) [str]</li>
+</ul>
+<p>Path to a folder where to write sample files</p>
+<ul>
+<li><strong>n_reads</strong> (default: 1000) [int]</li>
+</ul>
+<p>Number of randomly selected reads in each sample</p>
+<ul>
+<li><strong>n_samples</strong> (default: 1) [int]</li>
+</ul>
+<p>Number of samples to generate files for</p>
+<ul>
+<li><strong>rand_seed</strong> (default: 42) [int]</li>
+</ul>
+<p>Seed to use for the pseudo randon generator. For non deterministic behaviour set to 0</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage_1">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Reads_sample</span><span class="p">(</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> <span class="s2">&quot;./output/sample_reads/&quot;</span><span class="p">,</span> <span class="n">output_prefix</span><span class="o">=</span><span class="s2">&quot;1K&quot;</span><span class="p">,</span> <span class="n">n_reads</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Reads_sample ##</span>
+<span class="ansi-green-fg">    Checking Bam and index file</span>
+<span class="ansi-green-fg">    Load index</span>
+<span class="ansi-green-fg">    Write sample reads</span>
+<span class="ansi-green-fg">    Indexing output bam file</span>
+<span class="ansi-green-fg">    Indexing output bam file</span>
+<span class="ansi-green-fg">    Indexing output bam file</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="references_sample">References_sample</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">References_sample</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>References_sample</strong> (input_fn, output_fn, selected_reads_fn, frac_reads, min_reads_ref, rand_seed, sorting_threads, verbose, quiet, progress, kwargs)</p>
+<p>Randomly sample reads per references according to a fraction od the reads mapped to this reference for a one or several files and write selected reads in a new bam file</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [list(str)]</li>
+</ul>
+<p>Bam file path or directory containing bam files or list of files, or regex or list of regex. It is quite flexible. All files need to be sorted and aligned to the same reference file.</p>
+<ul>
+<li><strong>output_fn</strong> (default: out.bam) [str]</li>
+</ul>
+<p>Path to the output bam file (sorted and indexed)</p>
+<ul>
+<li><strong>selected_reads_fn</strong> (default: select_ref.txt) [str]</li>
+</ul>
+<p>Path to the output text file containing all the read id selected</p>
+<ul>
+<li><strong>frac_reads</strong> (default: 0.5) [int]</li>
+</ul>
+<p>Fraction of reads mapped to sample for each reference</p>
+<ul>
+<li><strong>min_reads_ref</strong> (default: 30) [int]</li>
+</ul>
+<p>Minimal read coverage per file and reference before sampling</p>
+<ul>
+<li><strong>rand_seed</strong> (default: 42) [int]</li>
+</ul>
+<p>Seed to use for the pseudo randon generator. For non deterministic behaviour set to None</p>
+<ul>
+<li><strong>sorting_threads</strong> (default: 4) [int]</li>
+</ul>
+<p>Number of threads to use for bam file sorting</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage_2">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">References_sample</span> <span class="p">(</span>
+    <span class="n">input_fn</span> <span class="o">=</span> <span class="s2">&quot;./data/sample_*.bam&quot;</span><span class="p">,</span>
+    <span class="n">output_fn</span> <span class="o">=</span> <span class="s2">&quot;./output/sample_References_sample.bam&quot;</span><span class="p">,</span>
+    <span class="n">selected_reads_fn</span> <span class="o">=</span> <span class="s2">&quot;./output/sample_References_sample_refid.txt&quot;</span><span class="p">,</span>
+    <span class="n">frac_reads</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">min_reads_ref</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Ref_sample ##</span>
+<span class="ansi-blue-intense-fg ansi-bold">## Index files ##</span>
+<span class="ansi-green-fg">    Indexing alignment file ./data/sample_2.bam</span>
+    Reading : 13678 Reads [00:00, 20143.58 Reads/s]
+<span class="ansi-green-fg">    Indexing alignment file ./data/sample_1.bam</span>
+    Reading : 13684 Reads [00:00, 23549.99 Reads/s]
+<span class="ansi-green-fg">    Raw read counts summary</span>
+<span class="ansi-green-fg">     primary reads: 21,185</span>
+<span class="ansi-green-fg">     secondary reads: 2,966</span>
+<span class="ansi-green-fg">     unmapped reads: 2,815</span>
+<span class="ansi-green-fg">     supplementary reads: 396</span>
+<span class="ansi-blue-intense-fg ansi-bold">## Randomly pick reads per references ##</span>
+<span class="ansi-blue-intense-fg ansi-bold">## Sample reads and write to output file ##</span>
+<span class="ansi-green-fg">    Writing selected reads for bam file ./data/sample_2.bam</span>
+    Writing : 100%|██████████| 2656/2656 [00:02&lt;00:00, 1164.71 Reads/s]
+<span class="ansi-green-fg">    Writing selected reads for bam file ./data/sample_1.bam</span>
+    Writing : 100%|██████████| 2653/2653 [00:02&lt;00:00, 1193.08 Reads/s]
+<span class="ansi-green-fg">    Sort BAM File</span>
+<span class="ansi-green-fg">    Index sorted BAM File</span>
+<span class="ansi-green-fg">    Selected read counts summary</span>
+<span class="ansi-green-fg">     valid reads: 21,185</span>
+<span class="ansi-green-fg">     valid sampled reads: 5,309</span>
+<span class="ansi-green-fg">     valid references: 17</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="filter">Filter</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">Filter</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>Filter</strong> (input_fn, output_fn, selected_reads_fn, skip_unmapped, skip_secondary, skip_supplementary, index_reads, orientation, min_read_len, min_align_len, min_mapq, min_freq_identity, select_ref_fn, exclude_ref_fn, verbose, quiet, progress, kwargs)</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to the bam file to filter</p>
+<ul>
+<li><strong>output_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to the write filtered bam file</p>
+<ul>
+<li><strong>selected_reads_fn</strong> (default: None) [str]</li>
+</ul>
+<p>Optional file where to write ids of selected reads</p>
+<ul>
+<li><strong>skip_unmapped</strong> (default: False) [bool]</li>
+</ul>
+<p>Filter out unmapped reads</p>
+<ul>
+<li><strong>skip_secondary</strong> (default: False) [bool]</li>
+</ul>
+<p>Filter out secondary alignment</p>
+<ul>
+<li><strong>skip_supplementary</strong> (default: False) [bool]</li>
+</ul>
+<p>Filter out supplementary alignment</p>
+<ul>
+<li><strong>index_reads</strong> (default: False) [bool]</li>
+</ul>
+<p>Index bam file with both pysam and pybiotools reads_index</p>
+<ul>
+<li><strong>orientation</strong> (default: .) [str]</li>
+</ul>
+<p>Orientation of alignment on reference genome {"+","-" ,"."}</p>
+<ul>
+<li><strong>min_read_len</strong> (default: 0) [int]</li>
+</ul>
+<p>Minimal query read length (basecalled length)</p>
+<ul>
+<li><strong>min_align_len</strong> (default: 0) [int]</li>
+</ul>
+<p>Minimal query alignment length on reference</p>
+<ul>
+<li><strong>min_mapq</strong> (default: 0) [int]</li>
+</ul>
+<p>Minimal mapping quality score (mapq)</p>
+<ul>
+<li><strong>min_freq_identity</strong> (default: 0) [float]</li>
+</ul>
+<p>Minimal frequency of alignment identity [0 to 1]</p>
+<ul>
+<li><strong>select_ref_fn</strong> (default: None) [str]</li>
+</ul>
+<p>File containing a list of references on which the reads have to be mapped.</p>
+<ul>
+<li><strong>exclude_ref_fn</strong> (default: None) [str]</li>
+</ul>
+<p>File containing a list of references on which the reads should not be mapped.</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="basic-usage_3">Basic usage</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Filter all non primary reads</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Filter</span><span class="p">(</span>
+    <span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;./output/sample_1_filter.bam&quot;</span><span class="p">,</span>
+    <span class="n">skip_unmapped</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">skip_supplementary</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">skip_secondary</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">head</span><span class="p">(</span><span class="s2">&quot;./output/sample_1_filter.bam&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Filter ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: Make output directories</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+    Reading : 13684 Reads [00:05, 2633.81 Reads/s]
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      primary: 10,584</span>
+<span class="ansi-green-fg">      total: 10,584</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      total: 3,100</span>
+<span class="ansi-green-fg">      secondary: 1,496</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      supplementary: 188</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>4f20c07e-183a-4483-9313-220390 16 chr-I 2    60 328S11M5I14M1D10M4I30M2D52M1D6 * 0 0 GGCACACCCACACCACACCCACACCCACAC ##$&#39;&amp;$(.-,.+./(+,/844-,-;7005, NM:i:1988 ms:i:18286 AS:i:18594 nn:i:0 tp:A:P cm:i:921  s1:i:6929 s2:i:609  de:f:0.085  SA:Z:chr-VIII,562456,+,14512S1 
+f5fc15c4-0bd5-4e56-9509-625574 16 chr-I 16   60 263S37M1D18M1I9M2I19M1D10M3D4M * 0 0 CTGGGACACACCACACCCACACCACACCCA &#34;$#&#34;%+*-.1)&#39;&#39;+)(*,$+-462/..;75 NM:i:183  ms:i:2086  AS:i:2086  nn:i:0 tp:A:P cm:i:103  s1:i:758  s2:i:357  de:f:0.0852 SA:Z:chr-VIII,562456,+,1742S12 
+4c144dc6-705a-4d0c-951f-02fd7f 16 chr-I 542  60 8S25M1I49M1D49M1I14M1I12M1D6M1 * 0 0 TTTGAGGTACGGCACTTGCCTCAGCGGTCT &#34;$$)*&#39;+(.,+&amp;%(&amp;(10&amp;(&#34;&#39;*%$..,1- NM:i:221  ms:i:1888  AS:i:1888  nn:i:0 tp:A:P cm:i:80   s1:i:588  s2:i:370  de:f:0.1074 
+6449b796-5339-4d61-8cf4-14658f 0  chr-I 1007 60 116S17M1I51M1D21M1I3M1I41M1D26 * 0 0 TCAATTGTACTCGTTAGTTCAAGATGGTGT &#39;&#39;%$+&#39;(*&amp;,+%&amp;$*%).)#%&#39;&amp;&#39;-(1(*, NM:i:2273 ms:i:24152 AS:i:24491 nn:i:0 tp:A:P cm:i:1195 s1:i:9277 s2:i:1734 de:f:0.0799 
+f0bea8a5-a7bc-455c-b0e8-abc6ff 0  chr-I 1331 60 130S14M2D5M1D10M3D5M1I19M3D2M3 * 0 0 TCAGTGATAGCCGTTCAGTTGGTGTTAGCA 25+/-%$$$&#34;$%/.7&amp;%#&amp;&amp;(/-2-:(++, NM:i:459  ms:i:4616  AS:i:4616  nn:i:0 tp:A:P cm:i:213  s1:i:1646 s2:i:247  de:f:0.0948 
+f50af728-e016-4c74-b48f-fe7459 0  chr-I 1708 60 57S16M2D10M2D35M2D12M1D2M1I34M * 0 0 ATATTGCTTCGTTCCGGTTATCTGGAAACG #$#(&amp;&#39;,&lt;3:79++($&#34;$#&#34;#&amp;$$#()&#39;(% NM:i:99   ms:i:1754  AS:i:1754  nn:i:0 tp:A:P cm:i:95   s1:i:698  s2:i:383  de:f:0.0686 
+3213cb66-ac07-468a-862e-4e5fd1 0  chr-I 4220 60 103S12M3D6M2D56M1I33M2D19M1I35 * 0 0 ATCGGTGGCGCTTCGTTCAATGGGTGTTTA %*)&amp;)&#39;&#39;),#%#)%*,2)$##%&amp;%%&amp;),%&#34; NM:i:30   ms:i:744   AS:i:744   nn:i:0 tp:A:P cm:i:40   s1:i:310  s2:i:0    de:f:0.0495 
+370dbed1-1e84-4b40-87ff-e6468b 16 chr-I 4327 60 19S21M1D33M2D32M1I2M2D19M2D39M * 0 0 TTTCCAATAGTTTAAGGTTACTACATGACA &#39;&#39;&#39;((,&amp;#(&#39;&#39;&amp;)*,))*%0%-*298522* NM:i:449  ms:i:8048  AS:i:8048  nn:i:0 tp:A:P cm:i:459  s1:i:3247 s2:i:0    de:f:0.0594 
+9e21a7d4-1b3e-4967-856e-ca4e99 0  chr-I 4506 48 106S20M1I3M1D7M1D9M2D11M1D4M1I * 0 0 ACCGTGCTGGTTCGGATCAGCAAAGAAGTT &#34;%$#%$%#&#39;%)(+%&#39;&#34;#&#34;&#34;#%%)&#39;%(*),7 NM:i:256  ms:i:336   AS:i:336   nn:i:0 tp:A:P cm:i:10   s1:i:73   s2:i:0    de:f:0.1846 
+b6a48773-8ef9-4491-b554-40d18f 16 chr-I 4949 60 242S10M1I30M1D24M1D18M2I22M2D5 * 0 0 TAAACTTGGGATGCAGAGCCTAAAAATGTT &#34;),(##&#34;#&#34;&#34;&#34;&#34;$$&#39;(&#39;$#%$&#39;+8.*&#39;&amp;)- NM:i:254  ms:i:524   AS:i:524   nn:i:0 tp:A:P cm:i:15   s1:i:119  s2:i:0    de:f:0.1917 
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="multi-criteria-filtering">Multi criteria filtering</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Remove unmapped, short reads and alignments, reads mapped on the minus strand, low mapq and low identity</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Filter</span><span class="p">(</span>
+    <span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;./output/sample_1_filter.bam&quot;</span><span class="p">,</span>
+    <span class="n">skip_unmapped</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">min_read_len</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">min_align_len</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+    <span class="n">min_mapq</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">min_freq_identity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">head</span><span class="p">(</span><span class="s2">&quot;./output/sample_1_filter.bam&quot;</span><span class="p">)</span> 
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Filter ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: Make output directories</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+    Reading : 13684 Reads [00:02, 5320.77 Reads/s]
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      total: 9,211</span>
+<span class="ansi-green-fg">      wrong_orientation: 6,168</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      low_mapping_quality: 973</span>
+<span class="ansi-green-fg">      low_identity: 514</span>
+<span class="ansi-green-fg">      short_alignment: 99</span>
+<span class="ansi-green-fg">      short_read: 41</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      total: 4,473</span>
+<span class="ansi-green-fg">      primary: 4,422</span>
+<span class="ansi-green-fg">      supplementary: 51</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>6449b796-5339-4d61-8cf4-14658f 0 chr-I 1007  60 116S17M1I51M1D21M1I3M1I41M1D26 * 0 0 TCAATTGTACTCGTTAGTTCAAGATGGTGT &#39;&#39;%$+&#39;(*&amp;,+%&amp;$*%).)#%&#39;&amp;&#39;-(1(*, NM:i:2273 ms:i:24152 AS:i:24491 nn:i:0 tp:A:P cm:i:1195 s1:i:9277 s2:i:1734 de:f:0.0799 
+f0bea8a5-a7bc-455c-b0e8-abc6ff 0 chr-I 1331  60 130S14M2D5M1D10M3D5M1I19M3D2M3 * 0 0 TCAGTGATAGCCGTTCAGTTGGTGTTAGCA 25+/-%$$$&#34;$%/.7&amp;%#&amp;&amp;(/-2-:(++, NM:i:459  ms:i:4616  AS:i:4616  nn:i:0 tp:A:P cm:i:213  s1:i:1646 s2:i:247  de:f:0.0948 
+f50af728-e016-4c74-b48f-fe7459 0 chr-I 1708  60 57S16M2D10M2D35M2D12M1D2M1I34M * 0 0 ATATTGCTTCGTTCCGGTTATCTGGAAACG #$#(&amp;&#39;,&lt;3:79++($&#34;$#&#34;#&amp;$$#()&#39;(% NM:i:99   ms:i:1754  AS:i:1754  nn:i:0 tp:A:P cm:i:95   s1:i:698  s2:i:383  de:f:0.0686 
+3213cb66-ac07-468a-862e-4e5fd1 0 chr-I 4220  60 103S12M3D6M2D56M1I33M2D19M1I35 * 0 0 ATCGGTGGCGCTTCGTTCAATGGGTGTTTA %*)&amp;)&#39;&#39;),#%#)%*,2)$##%&amp;%%&amp;),%&#34; NM:i:30   ms:i:744   AS:i:744   nn:i:0 tp:A:P cm:i:40   s1:i:310  s2:i:0    de:f:0.0495 
+a93f0bb3-2ac6-4139-9eea-618d3d 0 chr-I 5549  60 9S9M1I14M1I4M3D3M1I9M1D27M1D5M * 0 0 ACAATGGTTTTTTATAGAGACATATTTTTT &#34;&#34;&#39;&#34;&#34;&#34;&#34;&#34;%&amp;%&amp;&amp;-0&#39;+&#39;&#39;-+)+)2-;84, NM:i:209  ms:i:2678  AS:i:2678  nn:i:0 tp:A:P cm:i:127  s1:i:1031 s2:i:0    de:f:0.078  
+68ef24e6-a3c8-4c7e-a10e-b9db60 0 chr-I 6611  60 92S38M2D12M1D25M1D22M1D17M2D4M * 0 0 TCAGTACTTCGTTCAGTAACCAAGAAAGTT &amp;&#34;##&amp;$*)*%(+22$###&#34;$#*(%*.-1/&lt; NM:i:64   ms:i:1366  AS:i:1366  nn:i:0 tp:A:P cm:i:73   s1:i:526  s2:i:0    de:f:0.058  
+4eb0b340-2c98-4d05-921e-25a33f 0 chr-I 7967  60 112S12M1I80M1D7M1D9M3D15M1I25M * 0 0 CTCAGTATGCTTCGTTCAGTCAGACTGGGT #$$%#&#39;%-$12&lt;7666.&#39;$)*$&amp;%$&amp;).43 NM:i:87   ms:i:1128  AS:i:1128  nn:i:0 tp:A:P cm:i:56   s1:i:429  s2:i:0    de:f:0.0752 
+1c657032-c062-4728-ae39-f455bd 0 chr-I 12969 60 98S6M1I12M1I25M1D14M3D16M1I92M * 0 0 ATCGGTATGCTTCGTTCAGGTGTTTAACCA &#34;&#34;%&#39;&amp;)(.$33&lt;42%####/&#39;)+&gt;=48/3) NM:i:40   ms:i:940   AS:i:940   nn:i:0 tp:A:P cm:i:55   s1:i:364  s2:i:129  de:f:0.0527 
+3b2856a0-7f61-4829-ae09-d3ed6b 0 chr-I 15150 60 101S12M1I12M1I6M1D2M1D13M2D6M2 * 0 0 CTCATTGCTTCGTTTCGGTTGCCTCGATTC %,(%&amp;&amp;&#34;%+)0021+###$#&#34;&amp;(,.55:&gt;8 NM:i:112  ms:i:806   AS:i:806   nn:i:0 tp:A:P cm:i:23   s1:i:229  s2:i:136  de:f:0.1199 
+54df109b-0ddf-48db-b7c0-8eecfe 0 chr-I 16913 60 46S13M2D63M1D43M2D30M2D8M2D16M * 0 0 TCGGTTTTCGACATCGTGAAACGCTTTCGC &#34;&#34;#&#34;&#34;**-&#39;&amp;&amp;&amp;+-,&#39;$$,/(++)-/+##% NM:i:52   ms:i:898   AS:i:898   nn:i:0 tp:A:P cm:i:41   s1:i:319  s2:i:145  de:f:0.0558 
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="select-specific-reference">Select specific reference</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s2">&quot;data/select_ref.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;chr-I&#39;</span><span class="p">,</span> <span class="s1">&#39;chr-II&#39;</span><span class="p">,</span> <span class="s1">&#39;chr-III&#39;</span><span class="p">,</span> <span class="s1">&#39;chr-IV&#39;</span><span class="p">,</span> <span class="s1">&#39;chr-V&#39;</span><span class="p">,</span> <span class="s1">&#39;chr-VI&#39;</span><span class="p">]:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Alignment</span><span class="o">.</span><span class="n">Filter</span><span class="p">(</span>
+    <span class="n">input_fn</span><span class="o">=</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span>
+    <span class="n">output_fn</span><span class="o">=</span><span class="s2">&quot;./output/sample_1_filter.bam&quot;</span><span class="p">,</span>
+    <span class="n">select_ref_fn</span><span class="o">=</span><span class="s2">&quot;data/select_ref.txt&quot;</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Filter ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-green-fg">    Loading selected reference file ids</span>
+<span class="ansi-white-fg">    [DEBUG]: Found 6 references to select</span>
+<span class="ansi-white-fg">    [DEBUG]: Make output directories</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+    Reading : 13684 Reads [00:02, 6754.57 Reads/s]
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads retained</span>
+<span class="ansi-green-fg">      total: 4,426</span>
+<span class="ansi-green-fg">      primary: 2,650</span>
+<span class="ansi-green-fg">      unmapped: 1,416</span>
+<span class="ansi-green-fg">      secondary: 322</span>
+<span class="ansi-green-fg">      supplementary: 38</span>
+<span class="ansi-green-fg">     Reads discarded</span>
+<span class="ansi-green-fg">      invalid_reference: 9,258</span>
+<span class="ansi-green-fg">      total: 9,258</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="to_fastq">To_fastq</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">To_fastq</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>To_fastq</strong> (input_fn, output_r1_fn, output_r2_fn, ignore_paired_end, verbose, quiet, progress, kwargs)</p>
+<p>Dump reads from an alignment file or set of alignment file(s) to a fastq or pair of fastq file(s). Only the primary alignment are kept and paired_end reads are assumed to be interleaved. Compatible with unmapped or unaligned alignment files as well as files without header.</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [list(str)]</li>
+</ul>
+<p>Path (or list of paths) to input BAM/CRAM/SAM file(s)</p>
+<ul>
+<li><strong>output_r1_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to an output fastq file (for Read1 in paired_end mode of output_r2_fn is provided). Automatically gzipped if the .gz extension is found</p>
+<ul>
+<li><strong>output_r2_fn</strong> (default: None) [str]</li>
+</ul>
+<p>Optional Path to an output fastq file. Automatically gzipped if the .gz extension is found</p>
+<ul>
+<li><strong>ignore_paired_end</strong> (default: False) [bool]</li>
+</ul>
+<p>Ignore paired_end information and output everything in a single file.</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="single-end-read-usage-from-bam-files">Single end read usage from bam files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">To_fastq</span><span class="p">(</span>
+    <span class="n">input_fn</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span> <span class="s2">&quot;./data/sample_2.bam&quot;</span><span class="p">],</span>
+    <span class="n">output_r1_fn</span><span class="o">=</span><span class="s2">&quot;./output/sample_1-2_SE_from_bam.fastq.gz&quot;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment To_fastq ##</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_SE_from_bam.fastq.gz in writing mode</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_1.bam</span>
+    Reading: 12000 Reads [00:16, 740.81 Reads/s] 
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_1.bam</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_2.bam</span>
+    Reading: 12000 Reads [00:19, 630.06 Reads/s] 
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_2.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_SE_from_bam.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="paired-end-reads-usage-from-unaligned-cram-files">Paired-end reads usage from unaligned CRAM files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">To_fastq</span><span class="p">(</span>
+    <span class="n">input_fn</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;./data/sample_1_20k.cram&quot;</span><span class="p">,</span> <span class="s2">&quot;./data/sample_2_20k.cram&quot;</span><span class="p">],</span>
+    <span class="n">output_r1_fn</span><span class="o">=</span><span class="s2">&quot;./output/sample_1-2_PE_from_CRAM_1.fastq.gz&quot;</span><span class="p">,</span>
+    <span class="n">output_r2_fn</span><span class="o">=</span><span class="s2">&quot;./output/sample_1-2_PE_from_CRAM_2.fastq.gz&quot;</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment To_fastq ##</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_PE_from_CRAM_1.fastq.gz in writing mode</span>
+<span class="ansi-white-fg">    [DEBUG]: Opening file ./output/sample_1-2_PE_from_CRAM_2.fastq.gz in writing mode</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_1_20k.cram</span>
+    Reading: 12000 Reads [00:03, 3318.62 Reads/s]
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_1_20k.cram</span>
+<span class="ansi-green-fg">    Reading input file ./data/sample_2_20k.cram</span>
+    Reading: 12000 Reads [00:03, 3385.10 Reads/s]
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file ./data/sample_2_20k.cram</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_PE_from_CRAM_1.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+<span class="ansi-white-fg">    [DEBUG]: Closing file:./output/sample_1-2_PE_from_CRAM_2.fastq.gz</span>
+<span class="ansi-white-fg">    [DEBUG]: Sequences writen: 24000</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="split">Split</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">jhelp</span><span class="p">(</span><span class="n">Alignment</span><span class="o">.</span><span class="n">Split</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<p><strong>Split</strong> (input_fn, output_dir, n_files, output_fn_list, index, verbose, quiet, progress, kwargs)</p>
+<p>Split reads in a bam file in N files. The input bam file has to be sorted by coordinates and indexed. The last file can contain a few extra reads.</p>
+<hr>
+<ul>
+<li><strong>input_fn</strong> (required) [str]</li>
+</ul>
+<p>Path to the bam file to filter</p>
+<ul>
+<li><strong>output_dir</strong> (default: "") [str]</li>
+</ul>
+<p>Path to the directory where to write split bam files. Files generated have the same basename as the source file and are suffixed with numbers starting from 0</p>
+<ul>
+<li><strong>n_files</strong> (default: 10) [int]</li>
+</ul>
+<p>Number of file to split the original file into</p>
+<ul>
+<li><strong>output_fn_list</strong> (default: []) [list(str)]</li>
+</ul>
+<p>As an alternative to output_dir and n_files one can instead give a list of output files. Reads will be automatically split between the files in the same order as given</p>
+<ul>
+<li><strong>index</strong> (default: False) [bool]</li>
+</ul>
+<p>Index output BAM files</p>
+<ul>
+<li><p><strong>verbose</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>quiet</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>progress</strong> (default: False) [bool]</p>
+</li>
+<li><p><strong>kwargs</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="usage-with-number-of-output-files-to-generate">Usage with number of output files to generate</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span>
+    <span class="n">input_fn</span><span class="o">=</span><span class="s2">&quot;./data/sample_1.bam&quot;</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./output/split_bam&quot;</span><span class="p">,</span>
+    <span class="n">n_files</span><span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">lh</span> <span class="s2">&quot;./output/split_bam&quot;</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Split ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: List of output files to generate:</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_0.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_1.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_2.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam/sample_1_3.bam</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Counting reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_0.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_0.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_2.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam/sample_1_3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam/sample_1_3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 3,421</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads from index: 13,684</span>
+<span class="ansi-green-fg">     Reads writen: 13,684</span>
+<span class="ansi-green-fg">     Reads per file: 3,421</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>total 38M
+-rw-rw-r-- 1 aleg aleg  11M Jan 19 14:53 sample_1_0.bam
+-rw-rw-r-- 1 aleg aleg  12M Jan 19 14:53 sample_1_1.bam
+-rw-rw-r-- 1 aleg aleg 9.4M Jan 19 14:53 sample_1_2.bam
+-rw-rw-r-- 1 aleg aleg 5.6M Jan 19 14:53 sample_1_3.bam
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="usage-with-a-predefined-list-of-output-files">Usage with a predefined list of output files</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">Alignment</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span>
+    <span class="n">input_fn</span><span class="o">=</span><span class="s2">&quot;./data/sample_2.bam&quot;</span><span class="p">,</span>
+    <span class="n">output_fn_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;./output/split_bam_2/f1.bam&quot;</span><span class="p">,</span> <span class="s2">&quot;./output/split_bam_2/f4.bam&quot;</span><span class="p">,</span> <span class="s2">&quot;./output/split_bam_2/f3.bam&quot;</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">lh</span> <span class="s2">&quot;./output/split_bam_2&quot;</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-blue-intense-fg ansi-bold">## Running Alignment Split ##</span>
+<span class="ansi-green-fg">    Checking input bam file</span>
+<span class="ansi-white-fg">    [DEBUG]: List of output files to generate:</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f1.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f4.bam</span>
+<span class="ansi-white-fg">    [DEBUG]: * ./output/split_bam_2/f3.bam</span>
+<span class="ansi-green-fg">    Parsing reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Counting reads</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 4,559</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f1.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 4,559</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f4.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Open ouput file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reached end of input file</span>
+<span class="ansi-white-fg">    [DEBUG]: Close output file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-white-fg">    [DEBUG]: Reads written: 4,560</span>
+<span class="ansi-white-fg">    [DEBUG]: index output file &#39;./output/split_bam_2/f3.bam&#39;</span>
+<span class="ansi-green-fg">    Read counts summary</span>
+<span class="ansi-green-fg">     Reads from index: 13,678</span>
+<span class="ansi-green-fg">     Reads writen: 13,678</span>
+<span class="ansi-green-fg">     Reads per file: 4,559</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>total 55M
+-rw-rw-r-- 1 aleg aleg  17M Jan 19 14:53 f1.bam
+-rw-rw-r-- 1 aleg aleg  10K Jan 19 14:53 f1.bam.bai
+-rw-rw-r-- 1 aleg aleg  12M Nov 11 21:31 f2.bam
+-rw-rw-r-- 1 aleg aleg 7.4K Jan 30  2020 f2.bam.bai
+-rw-rw-r-- 1 aleg aleg  11M Jan 19 14:53 f3.bam
+-rw-rw-r-- 1 aleg aleg 5.2K Jan 19 14:53 f3.bam.bai
+-rw-rw-r-- 1 aleg aleg  16M Jan 19 14:53 f4.bam
+-rw-rw-r-- 1 aleg aleg 8.6K Jan 19 14:53 f4.bam.bai
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../CLI/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CLI" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              CLI
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../Fastq/CLI/" class="md-footer__link md-footer__link--next" aria-label="Next: CLI" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              CLI
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright © 2020 Adrien Leger
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
