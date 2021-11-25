@@ -1,4 +1,4 @@
-# pyBioTools v0.2.10
+# pyBioTools v0.2.11
 
 [![GitHub license](https://img.shields.io/github/license/a-slide/pyBioTools.svg)](https://github.com/a-slide/pyBioTools/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/Language-Python3-yellow.svg)](https://www.python.org/)

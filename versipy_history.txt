@@ -21,3 +21,4 @@
 2021-01-22 12:03:11.343404	0.2.8	Improve Seqsum merge function
 2021-01-22 14:27:41.767087	0.2.9	preformance update
 2021-02-08 11:44:07.264663	0.2.10	Add API annotation parser class
+2021-11-25 23:00:34.475817	0.2.11	catch block in fastq filter
