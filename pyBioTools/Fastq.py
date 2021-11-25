@@ -59,28 +59,33 @@ def Filter (
                     c["source files"]+=1
                     with pysam.FastxFile(fn) as fp_in:
                         logger.debug("Reading file {}".format(fn))
-                        for read in fp_in:
+                        try:
+                            for read in fp_in:
 
-                            if min_len and len(read.sequence) < min_len:
-                                c["short_reads"]+=1
+                                if min_len and len(read.sequence) < min_len:
+                                    c["short_reads"]+=1
 
-                            elif min_qual and np.mean(read.get_quality_array(qual_offset)) < min_qual:
-                                c["low_qual_reads"]+=1
+                                elif min_qual and np.mean(read.get_quality_array(qual_offset)) < min_qual:
+                                    c["low_qual_reads"]+=1
 
-                            elif remove_duplicates and read.name in read_ids:
-                                c["duplicate_reads"]+=1
+                                elif remove_duplicates and read.name in read_ids:
+                                    c["duplicate_reads"]+=1
 
-                            else:
-                                # Write valid read to dest file
-                                fp_out.write("{}\n".format(read))
-                                c["valid_reads"]+=1
+                                else:
+                                    # Write valid read to dest file
+                                    fp_out.write("{}\n".format(read))
+                                    c["valid_reads"]+=1
 
-                            # Update counters
-                            read_ids.add(read.name)
-                            c["total_reads"]+=1
-                            p.update()
+                                # Update counters
+                                read_ids.add(read.name)
+                                c["total_reads"]+=1
+                                p.update()
 
-                        logger.debug("End of file {}".format(fn))
+
+                        except ValueError as E:
+                            c["Error file skipped"] += 1
+                        finally:
+                            logger.debug("End of file {}".format(fn))
 
     except (StopIteration, KeyboardInterrupt):
         pass
