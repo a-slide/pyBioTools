@@ -14,7 +14,7 @@
 
 **pyBioTools is a collection of python tools to manipulate biological sequences**
 
-Full documentation is available at https://adrienleger.com/pyBioTools/
+Full documentation is available at [https://adrienleger.com/pyBioTools/](https://a-slide.github.io/pyBioTools/)
 
 ## Disclaimer
 
